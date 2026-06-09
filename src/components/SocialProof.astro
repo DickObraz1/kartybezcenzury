@@ -1,0 +1,60 @@
+---
+// PLACEHOLDER: recenze a počty dodat (z eshopu nebo ručně)
+const reviews = [
+  {
+    name: 'Honza K.',
+    stars: 5,
+    text: 'Nejlepší koupě tohoto roku. Kamarádi mě nenávidí a zároveň mě milují. 10/10.',
+    // PLACEHOLDER: reálná recenze z eshopu
+  },
+  {
+    name: 'Tereza M.',
+    stars: 5,
+    text: 'Koupila jsem to jako dárek k narozeninám. Oslava skončila ve 4 ráno. Doporučuji.',
+    // PLACEHOLDER: reálná recenze z eshopu
+  },
+  {
+    name: 'Martin P.',
+    stars: 5,
+    text: 'Varování: jestli hrajete s šéfem, ujistěte se, že umí srandu. Jinak 5 hvězd.',
+    // PLACEHOLDER: reálná recenze z eshopu
+  },
+];
+---
+
+<section class="bg-brand-white py-16 md:py-24 px-5 reveal">
+  <div class="max-w-2xl mx-auto">
+    <!-- Stats -->
+    <div class="grid grid-cols-3 gap-4 mb-12 text-center">
+      {[
+        { number: '1 000+', label: 'prodaných her' }, // PLACEHOLDER: reálné číslo
+        { number: '5 ★', label: 'průměrné hodnocení' },
+        { number: '16+', label: 'pro dospělé' },
+      ].map((stat) => (
+        <div class="bg-brand-gray rounded-card p-4">
+          <p class="font-display text-3xl md:text-4xl text-brand-black">{stat.number}</p>
+          <p class="text-xs text-brand-gray-dark uppercase tracking-wide mt-1">{stat.label}</p>
+        </div>
+      ))}
+    </div>
+
+    <h2 class="font-display text-4xl md:text-5xl uppercase text-brand-black text-center mb-8">
+      Co říkají ostatní
+    </h2>
+
+    <!-- Recenze -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      {reviews.map((review) => (
+        <div class="bg-brand-gray rounded-card p-5 border border-gray-200">
+          <div class="flex gap-0.5 mb-3" aria-label={`${review.stars} z 5 hvězd`}>
+            {Array.from({ length: review.stars }).map(() => (
+              <span class="text-yellow-400 text-lg">★</span>
+            ))}
+          </div>
+          <p class="text-brand-black text-sm leading-relaxed mb-4">"{review.text}"</p>
+          <p class="text-brand-gray-dark text-xs font-bold">— {review.name}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

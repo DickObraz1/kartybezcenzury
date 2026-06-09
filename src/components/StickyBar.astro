@@ -1,0 +1,44 @@
+---
+// Sticky add-to-cart bar — zobrazí se po odscrollování heru
+// PLACEHOLDER: cena a href sestavit ze products.json ve Fázi 3
+---
+
+<div
+  id="sticky-bar"
+  class="fixed bottom-0 left-0 right-0 z-50 bg-brand-black border-t border-gray-800 px-5 py-3 flex items-center justify-between gap-3 translate-y-full transition-transform duration-300 md:hidden"
+  aria-label="Rychlý nákup"
+>
+  <div>
+    <p class="text-xs text-gray-400 leading-none">Karty bez cenzury</p>
+    <!-- PLACEHOLDER: cena -->
+    <p class="text-xl font-display text-brand-white">699 Kč</p>
+  </div>
+
+  <!-- PLACEHOLDER href: sestaví se ze slug ve Fázi 3 -->
+  <a
+    href="#"
+    class="bg-brand-pink text-brand-white font-bold px-6 py-3 rounded-full text-base hover:bg-pink-600 active:scale-95 transition-all duration-150 whitespace-nowrap focus:outline-none focus:ring-4 focus:ring-brand-pink/50"
+    aria-label="Přidat do košíku"
+  >
+    Do košíku 🛒
+  </a>
+</div>
+
+<script>
+  const bar = document.getElementById('sticky-bar');
+  const hero = document.querySelector('section');
+
+  if (bar && hero) {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) {
+          bar.classList.remove('translate-y-full');
+        } else {
+          bar.classList.add('translate-y-full');
+        }
+      },
+      { threshold: 0 }
+    );
+    observer.observe(hero);
+  }
+</script>

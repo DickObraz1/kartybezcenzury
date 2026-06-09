@@ -1,0 +1,80 @@
+---
+// UI formuláře — nefunkční zatím, backend přijde ve Fázi 5 (Ecomail serverless)
+---
+
+<section class="bg-brand-black text-brand-white py-16 md:py-24 px-5 reveal">
+  <div class="max-w-md mx-auto text-center">
+    <h2 class="font-display text-4xl md:text-5xl uppercase leading-none mb-4">
+      Posíláme jen<br />
+      <span class="text-brand-pink">vtipný blbosti</span>
+    </h2>
+
+    <p class="text-gray-300 text-lg mb-8">
+      Nech nám email. Posíláme slevy, novinky a občas něco, co tvoje HR oddělení neschválí.
+    </p>
+
+    <!-- Formulář — zatím nefunkční, jen UI -->
+    <!-- Fáze 5: napojit na POST /api/subscribe → Ecomail -->
+    <form
+      id="signup-form"
+      class="flex flex-col gap-4"
+      novalidate
+      aria-label="Přihlásit se k odběru novinek"
+    >
+      <!-- Honeypot (skrytý před uživateli, zachytí boty) -->
+      <input
+        type="text"
+        name="website"
+        tabindex="-1"
+        autocomplete="off"
+        class="hidden"
+        aria-hidden="true"
+      />
+
+      <div class="flex flex-col sm:flex-row gap-3">
+        <label for="email" class="sr-only">Tvůj email</label>
+        <input
+          id="email"
+          type="email"
+          name="email"
+          placeholder="tvůj@email.cz"
+          required
+          class="flex-1 bg-gray-900 border border-gray-700 text-brand-white placeholder-gray-500 rounded-full px-5 py-3.5 text-base focus:outline-none focus:ring-2 focus:ring-brand-pink focus:border-transparent"
+        />
+        <button
+          type="submit"
+          class="bg-brand-pink text-brand-white font-bold px-7 py-3.5 rounded-full hover:bg-pink-600 active:scale-95 transition-all duration-150 focus:outline-none focus:ring-4 focus:ring-brand-pink/50 whitespace-nowrap"
+        >
+          Chci slevičku 🎉
+        </button>
+      </div>
+
+      <!-- GDPR souhlas -->
+      <label class="flex items-start gap-3 text-left cursor-pointer">
+        <input
+          type="checkbox"
+          name="gdpr"
+          required
+          class="mt-1 flex-shrink-0 accent-brand-pink"
+        />
+        <span class="text-xs text-gray-400">
+          Souhlasím se zpracováním e-mailu pro zasílání novinek a slev.
+          <a href="https://www.dickobraz.cz/info/ochrana-osobnich-udaju" target="_blank" rel="noopener noreferrer" class="underline hover:text-brand-pink">
+            Zásady ochrany osobních údajů.
+          </a>
+          16+ obsah.
+        </span>
+      </label>
+
+      <!-- Stavové zprávy — zobrazí se po odeslání (Fáze 5) -->
+      <p id="form-success" class="hidden text-brand-teal text-sm font-bold">
+        ✓ Super, přidali jsme tě! Sleva ti brzy přijde na email.
+      </p>
+      <p id="form-error" class="hidden text-red-400 text-sm">
+        Něco se pokazilo. Zkus to znovu nebo nás kontaktuj na webu.
+      </p>
+    </form>
+
+    <p class="text-xs text-gray-600 mt-4">Kdykoliv se odhlásíš. Žádný spam, jen srandy.</p>
+  </div>
+</section>

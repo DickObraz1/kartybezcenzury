@@ -1,0 +1,69 @@
+---
+// PLACEHOLDER: data rozšíření přijdou z products.json ve Fázi 2
+// CTA href sestavit ze slugu rozšíření ve Fázi 3
+---
+
+<section class="bg-brand-black text-brand-white py-16 md:py-24 px-5 reveal">
+  <div class="max-w-2xl mx-auto">
+    <!-- Badge -->
+    <div class="inline-flex items-center gap-2 bg-brand-wine text-brand-white text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-6">
+      <span>🆕</span>
+      <span>Rozšíření</span>
+    </div>
+
+    <div class="md:grid md:grid-cols-2 md:gap-12 md:items-center">
+      <!-- Text -->
+      <div>
+        <h2 class="font-display text-4xl md:text-5xl uppercase leading-none mb-4">
+          Přidej ještě víc<br />
+          <span class="text-brand-pink">pěkný sraček</span>
+        </h2>
+
+        <!-- PLACEHOLDER: popis rozšíření z dickobraz.cz -->
+        <p class="text-gray-300 text-lg mb-6">
+          Základní hra tě omrzela? Rozšíření přidává X nových karet, ještě temnější humor a situace, po kterých se nikdo nepodívá tobě do očí.
+        </p>
+
+        <!-- Co rozšíření přidává -->
+        <ul class="space-y-2 mb-8">
+          {[
+            'X nových černých otázkových karet',
+            'X nových bílých odpovědních karet',
+            '100% kompatibilní se základní hrou',
+            'Ještě méně vhodné pro slušnou společnost',
+          ].map((item) => (
+            <li class="flex gap-3 text-gray-300 text-sm">
+              <span class="text-brand-pink flex-shrink-0">✓</span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+
+        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+          <div>
+            <!-- PLACEHOLDER: cena rozšíření -->
+            <p class="text-sm text-gray-400 uppercase tracking-wide">Rozšíření</p>
+            <p class="text-3xl font-display">??? Kč</p>
+          </div>
+
+          <!-- PLACEHOLDER href: sestavit ze slugu ve Fázi 3 -->
+          <a
+            href="#"
+            class="inline-block bg-brand-wine text-brand-white font-bold px-7 py-3.5 rounded-full hover:bg-red-900 active:scale-95 transition-all duration-150 focus:outline-none focus:ring-4 focus:ring-brand-wine/50"
+            aria-label="Přidat rozšíření do košíku"
+          >
+            Přidat rozšíření 🛒
+          </a>
+        </div>
+      </div>
+
+      <!-- Fotka rozšíření placeholder -->
+      <div class="mt-10 md:mt-0">
+        <!-- PLACEHOLDER: fotka rozšíření – dodat ve Fázi 2 -->
+        <div class="w-full aspect-square bg-gray-800 rounded-card flex items-center justify-center text-gray-500 text-sm border border-gray-700 text-center px-4">
+          📦 Packshot rozšíření<br />(foto dodat)
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

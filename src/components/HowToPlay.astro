@@ -1,0 +1,71 @@
+---
+// PLACEHOLDER: texty dle DickObraz tónu — přizpůsobit po schválení
+---
+
+<section class="bg-brand-white py-16 md:py-24 px-5 reveal">
+  <div class="max-w-2xl mx-auto">
+    <h2 class="font-display text-4xl md:text-5xl uppercase text-brand-black text-center mb-12">
+      Pro koho to <span class="text-brand-pink">JE</span> a pro koho <span class="text-brand-wine">NENÍ</span>
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Pro koho TO JE -->
+      <div class="bg-brand-black rounded-card p-6">
+        <h3 class="font-display text-2xl text-brand-pink uppercase mb-4">✅ Pro koho to je</h3>
+        <ul class="space-y-3">
+          {[
+            'Partu přátel, co se nebojí trapasu',
+            'Večírky, kde chceš zařídit, aby se lidi bavili',
+            'Každého, kdo přežil školní výlet s Karty proti lidskosti',
+            'Lidi s černým smyslem pro humor',
+            'Týmbuildingy, kde se šéf dokáže zasmát sám sobě',
+          ].map((item) => (
+            <li class="flex gap-3 text-brand-white text-sm">
+              <span class="text-brand-pink flex-shrink-0">→</span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Pro koho to NENÍ -->
+      <div class="bg-brand-pink-light rounded-card p-6 border border-brand-wine/20">
+        <h3 class="font-display text-2xl text-brand-wine uppercase mb-4">❌ Pro koho to není</h3>
+        <ul class="space-y-3">
+          {[
+            'Pod 16 let (vážně, ne)',
+            'Lidi, co se urazí za špatně položenou otázku',
+            'Vánoce u babičky (pokud ji nemáš rád)',
+            'Každého, kdo si myslí, že přes humor nejde cokoliv',
+            'Citlivé duše a HR oddělení',
+          ].map((item) => (
+            <li class="flex gap-3 text-brand-black text-sm">
+              <span class="text-brand-wine flex-shrink-0">→</span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
+    <!-- Jak se hraje -->
+    <div class="mt-12 bg-brand-gray rounded-card p-6 md:p-8">
+      <h3 class="font-display text-2xl md:text-3xl uppercase text-brand-black mb-6 text-center">
+        Jak se hraje?
+      </h3>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
+        {[
+          { step: '1', icon: '🃏', title: 'Otočí se černá karta', desc: 'Jeden hráč přečte otázku nebo větu s mezerou.' },
+          { step: '2', icon: '✋', title: 'Každý zahraje odpověď', desc: 'Ostatní hráči hodí svou nejlepší (nejhorší) bílou kartu.' },
+          { step: '3', icon: '😂', title: 'Vítěz bere', desc: 'Čtenář vybere nejlepší (nebo nejhorší) kombinaci. Vítěz sbírá body.' },
+        ].map((item) => (
+          <div>
+            <div class="text-4xl mb-3">{item.icon}</div>
+            <h4 class="font-bold text-brand-black mb-1">{item.title}</h4>
+            <p class="text-sm text-brand-gray-dark">{item.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

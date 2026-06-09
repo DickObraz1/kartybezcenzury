@@ -1,0 +1,71 @@
+---
+// PLACEHOLDER: ceny a slug bundlu přijdou z products.json ve Fázi 2
+// Výpočet úspory: cena_zaklad + cena_rozsireni - cena_bundle
+const placeholderPriceBase = 699;
+const placeholderPriceExtension = 399; // PLACEHOLDER — doplnit
+const placeholderPriceBundle = 899;    // PLACEHOLDER — doplnit
+const saving = placeholderPriceBase + placeholderPriceExtension - placeholderPriceBundle;
+---
+
+<section class="bg-brand-pink py-16 md:py-24 px-5 reveal">
+  <div class="max-w-2xl mx-auto">
+    <div class="bg-brand-black rounded-card p-6 md:p-10 relative overflow-hidden">
+      <!-- Dekorativní prvek -->
+      <div class="absolute top-0 right-0 w-64 h-64 rounded-full bg-brand-pink opacity-10 blur-3xl pointer-events-none"></div>
+
+      <!-- Badge úspory -->
+      <div class="inline-flex items-center gap-2 bg-brand-wine text-brand-white text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-6">
+        <span>💰</span>
+        <!-- PLACEHOLDER: dynamicky ze součtu cen -->
+        <span>Ušetříš {saving} Kč</span>
+      </div>
+
+      <h2 class="font-display text-4xl md:text-5xl uppercase leading-none text-brand-white mb-4">
+        Základ +<br />
+        <span class="text-brand-pink">Rozšíření</span><br />
+        za méně
+      </h2>
+
+      <!-- PLACEHOLDER: popis bundle -->
+      <p class="text-gray-300 text-lg mb-8 max-w-lg">
+        Kup oboje najednou a ušetři. Víc karet, víc šílenosti, jedno tlačítko. Ideální tip na narozeniny (pro toho, koho fakt máš rád).
+      </p>
+
+      <!-- Co je v balíčku -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+        <div class="bg-gray-900 rounded-xl p-4 border border-gray-700">
+          <p class="font-bold text-brand-white mb-1">Karty bez cenzury</p>
+          <p class="text-sm text-gray-400">80 otázek · 320 odpovědí</p>
+          <!-- PLACEHOLDER: cena -->
+          <p class="text-gray-500 text-sm line-through mt-2">{placeholderPriceBase} Kč</p>
+        </div>
+        <div class="bg-gray-900 rounded-xl p-4 border border-gray-700">
+          <p class="font-bold text-brand-white mb-1">Rozšíření</p>
+          <!-- PLACEHOLDER: popis rozšíření -->
+          <p class="text-sm text-gray-400">Nové karty · Ještě horší</p>
+          <!-- PLACEHOLDER: cena -->
+          <p class="text-gray-500 text-sm line-through mt-2">{placeholderPriceExtension} Kč</p>
+        </div>
+      </div>
+
+      <!-- Cena bundle + CTA -->
+      <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+        <div>
+          <p class="text-sm text-gray-400 uppercase tracking-wide">Balíček</p>
+          <!-- PLACEHOLDER: cena bundle -->
+          <p class="text-5xl font-display text-brand-white">{placeholderPriceBundle} Kč</p>
+          <p class="text-brand-pink text-sm font-bold">místo {placeholderPriceBase + placeholderPriceExtension} Kč</p>
+        </div>
+
+        <!-- PLACEHOLDER href: sestavit ze slugu bundle ve Fázi 3 -->
+        <a
+          href="#"
+          class="inline-block bg-brand-pink text-brand-white font-bold text-lg px-8 py-4 rounded-full hover:bg-pink-600 active:scale-95 transition-all duration-150 shadow-lg shadow-pink-500/30 focus:outline-none focus:ring-4 focus:ring-brand-pink/50"
+          aria-label="Koupit balíček – základ + rozšíření"
+        >
+          Koupit balíček 🛒
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

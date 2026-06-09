@@ -1,0 +1,56 @@
+---
+// PLACEHOLDER pro interaktivní Embla Carousel — přijde ve Fázi 4
+// Teď jen statický náhled karet ve správném layoutu a stylu
+
+const sampleCards = [
+  { type: 'black', text: 'Nejlepší způsob jak zničit Vánoce je ________.' },
+  { type: 'white', text: 'Pití piva v 8 ráno' },
+  { type: 'black', text: 'Co si táta schovává pod postelí?' },
+  { type: 'white', text: 'Falešný orgasmus' },
+  { type: 'black', text: 'Proč jsem vyhozen ze zaměstnání? ________.' },
+  { type: 'white', text: 'Deset piv a špatné rozhodnutí' },
+  { type: 'black', text: 'Co mě drží v noci vzhůru?' },
+  { type: 'white', text: 'Sousedka v županu' },
+];
+---
+
+<section class="bg-brand-gray py-16 md:py-24 overflow-hidden reveal" id="galerie">
+  <div class="max-w-2xl mx-auto px-5">
+    <div class="text-center mb-10">
+      <h2 class="font-display text-4xl md:text-5xl uppercase text-brand-black mb-3">
+        Ukázka karet
+      </h2>
+      <p class="text-brand-gray-dark text-lg">
+        <!-- PLACEHOLDER: aktualizovat po dodání reálných karet -->
+        Takhle to vypadá uvnitř. Otočíme karty a pak se divíme, co z nás leze.
+      </p>
+    </div>
+
+    <!-- Statický placeholder pro carousel — Fáze 4 ho nahradí Embla Carousel -->
+    <div class="relative">
+      <!-- Scrollovatelný řádek karet -->
+      <div class="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide -mx-5 px-5">
+        {sampleCards.map((card) => (
+          <div
+            class:list={[
+              'flex-shrink-0 w-44 md:w-52 aspect-[2/3] rounded-card p-4 flex items-end snap-center shadow-lg',
+              card.type === 'black'
+                ? 'bg-brand-black text-brand-white border border-gray-700'
+                : 'bg-brand-white text-brand-black border border-gray-200',
+            ]}
+          >
+            <p class="text-sm font-bold leading-snug">{card.text}</p>
+          </div>
+        ))}
+      </div>
+
+      <!-- Gradient fade na krajích -->
+      <div class="pointer-events-none absolute top-0 left-0 w-8 h-full bg-gradient-to-r from-brand-gray to-transparent"></div>
+      <div class="pointer-events-none absolute top-0 right-0 w-8 h-full bg-gradient-to-l from-brand-gray to-transparent"></div>
+    </div>
+
+    <p class="text-center text-sm text-gray-400 mt-6">
+      👆 Swipe pro více karet · Interaktivní galerie přijde brzy
+    </p>
+  </div>
+</section>

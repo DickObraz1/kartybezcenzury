@@ -1,0 +1,53 @@
+---
+// PLACEHOLDER: otázky a odpovědi dle aktuálního stavu (dodat/opravit dle potřeby)
+const faqs = [
+  {
+    q: 'Kolik hráčů hra potřebuje?',
+    a: 'Nejlépe 4–10 hráčů. Pod 4 je to smutné, nad 10 je to chaos. (Chaos je taky fajn.)',
+  },
+  {
+    q: 'Pro koho je hra vhodná?',
+    a: 'Pro dospělé 16+. Opravdu. Obsah je dospělý. Pokud hrajete s tetou Marií, ujistěte se, že je to ta zábavnější teta.',
+  },
+  {
+    q: 'Jak rychle hra dorazí?',
+    a: 'Standardní doručení 2–4 pracovní dny. Express do druhého dne. Vše přes standardní dopravu dickobraz.cz.', // PLACEHOLDER: aktualizovat dle dopravy
+  },
+  {
+    q: 'Je rozšíření nutné koupit se základní hrou?',
+    a: 'Ne, rozšíření se prodává samostatně. Ale je to jako jíst čips bez dipa — jde to, ale proč?',
+  },
+  {
+    q: 'Co je v balení?',
+    a: 'Základní hra: 80 černých karet (otázky) + 320 bílých karet (odpovědi) + pravidla. Vše česky.', // PLACEHOLDER: přesné číslo ověřit
+  },
+  {
+    q: 'Jdou vrátit karty, pokud se mi nebudou líbit?',
+    a: 'Standardní zákonná lhůta 14 dní pro vrácení zboží. Podmínky na dickobraz.cz.',
+  },
+];
+---
+
+<section class="bg-brand-gray py-16 md:py-24 px-5 reveal">
+  <div class="max-w-2xl mx-auto">
+    <h2 class="font-display text-4xl md:text-5xl uppercase text-brand-black text-center mb-10">
+      Máš otázku?
+    </h2>
+
+    <dl class="space-y-4">
+      {faqs.map((faq, i) => (
+        <details class="group bg-brand-white rounded-card border border-gray-200 overflow-hidden">
+          <summary class="flex items-center justify-between gap-4 px-5 py-4 cursor-pointer list-none font-bold text-brand-black hover:text-brand-wine transition-colors">
+            <span>{faq.q}</span>
+            <span class="flex-shrink-0 text-brand-pink group-open:rotate-45 transition-transform duration-200 text-2xl font-display leading-none">
+              +
+            </span>
+          </summary>
+          <div class="px-5 pb-5 text-brand-gray-dark text-sm leading-relaxed">
+            {faq.a}
+          </div>
+        </details>
+      ))}
+    </dl>
+  </div>
+</section>
