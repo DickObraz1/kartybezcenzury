@@ -1,56 +1,310 @@
 ---
-// PLACEHOLDER pro interaktivní Embla Carousel — přijde ve Fázi 4
-// Teď jen statický náhled karet ve správném layoutu a stylu
+import cards from '../data/cards.json';
+import products from '../data/products.json';
 
-const sampleCards = [
-  { type: 'black', text: 'Nejlepší způsob jak zničit Vánoce je ________.' },
-  { type: 'white', text: 'Pití piva v 8 ráno' },
-  { type: 'black', text: 'Co si táta schovává pod postelí?' },
-  { type: 'white', text: 'Falešný orgasmus' },
-  { type: 'black', text: 'Proč jsem vyhozen ze zaměstnání? ________.' },
-  { type: 'white', text: 'Deset piv a špatné rozhodnutí' },
-  { type: 'black', text: 'Co mě drží v noci vzhůru?' },
-  { type: 'white', text: 'Sousedka v županu' },
-];
+// Prokládej otázky a odpovědi pro rytmický vizuál (žlutá, bílá, žlutá…)
+function interleave(
+  questions: string[],
+  answers: string[]
+): Array<{ type: 'question' | 'answer'; text: string }> {
+  const result: Array<{ type: 'question' | 'answer'; text: string }> = [];
+  const len = Math.max(questions.length, answers.length);
+  for (let i = 0; i < len; i++) {
+    if (i < questions.length) result.push({ type: 'question', text: questions[i] });
+    if (i < answers.length) result.push({ type: 'answer', text: answers[i] });
+  }
+  return result;
+}
+
+const zakladDeck = interleave(cards.zaklad.otazky, cards.zaklad.odpovedi);
+const rozsireniDeck = interleave(cards.rozsireni.otazky, cards.rozsireni.odpovedi);
 ---
 
-<section class="bg-brand-gray py-16 md:py-24 overflow-hidden reveal" id="galerie">
-  <div class="max-w-2xl mx-auto px-5">
-    <div class="text-center mb-10">
-      <h2 class="font-display text-4xl md:text-5xl uppercase text-brand-black mb-3">
+<section class="bg-brand-black py-16 md:py-24 overflow-hidden reveal" id="galerie">
+  <div class="max-w-3xl mx-auto px-5">
+
+    <!-- Hlavička -->
+    <div class="text-center mb-8">
+      <h2 class="font-display text-4xl md:text-5xl uppercase text-brand-white mb-3">
         Ukázka karet
       </h2>
-      <p class="text-brand-gray-dark text-lg">
-        <!-- PLACEHOLDER: aktualizovat po dodání reálných karet -->
-        Takhle to vypadá uvnitř. Otočíme karty a pak se divíme, co z nás leze.
+      <p class="text-gray-400 text-lg">
+        Takhle to vypadá uvnitř. Žluté = otázky. Bílé = odpovědi.
       </p>
     </div>
 
-    <!-- Statický placeholder pro carousel — Fáze 4 ho nahradí Embla Carousel -->
-    <div class="relative">
-      <!-- Scrollovatelný řádek karet -->
-      <div class="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide -mx-5 px-5">
-        {sampleCards.map((card) => (
-          <div
-            class:list={[
-              'flex-shrink-0 w-44 md:w-52 aspect-[2/3] rounded-card p-4 flex items-end snap-center shadow-lg',
-              card.type === 'black'
-                ? 'bg-brand-black text-brand-white border border-gray-700'
-                : 'bg-brand-white text-brand-black border border-gray-200',
-            ]}
-          >
-            <p class="text-sm font-bold leading-snug">{card.text}</p>
-          </div>
-        ))}
+    <!-- Tab přepínač: Základ / Rozšíření -->
+    <div class="flex justify-center mb-8" role="tablist" aria-label="Výběr balíčku karet">
+      <div class="inline-flex bg-gray-900 rounded-full p-1 gap-1">
+        <button
+          id="tab-zaklad"
+          role="tab"
+          aria-selected="true"
+          aria-controls="deck-zaklad"
+          class="tab-btn active px-5 py-2 rounded-full text-sm font-bold transition-all duration-200 bg-brand-yellow text-brand-black focus:outline-none focus:ring-2 focus:ring-brand-pink"
+        >
+          Základní hra
+        </button>
+        <button
+          id="tab-rozsireni"
+          role="tab"
+          aria-selected="false"
+          aria-controls="deck-rozsireni"
+          class="tab-btn px-5 py-2 rounded-full text-sm font-bold transition-all duration-200 text-gray-400 hover:text-brand-white focus:outline-none focus:ring-2 focus:ring-brand-pink"
+        >
+          Mezi nohama 🆕
+        </button>
       </div>
-
-      <!-- Gradient fade na krajích -->
-      <div class="pointer-events-none absolute top-0 left-0 w-8 h-full bg-gradient-to-r from-brand-gray to-transparent"></div>
-      <div class="pointer-events-none absolute top-0 right-0 w-8 h-full bg-gradient-to-l from-brand-gray to-transparent"></div>
     </div>
 
-    <p class="text-center text-sm text-gray-400 mt-6">
-      👆 Swipe pro více karet · Interaktivní galerie přijde brzy
-    </p>
+    <!-- Deck: Základní hra -->
+    <div id="deck-zaklad" role="tabpanel" aria-labelledby="tab-zaklad" class="embla" data-deck="zaklad">
+      <div class="embla__viewport overflow-hidden cursor-grab active:cursor-grabbing" tabindex="0">
+        <div class="embla__container flex gap-4" style="touch-action: pan-y pinch-zoom;">
+          {zakladDeck.map((card, i) => (
+            <div
+              class="embla__slide flex-shrink-0 w-48 md:w-56"
+              role="group"
+              aria-label={`Karta ${i + 1} z ${zakladDeck.length}: ${card.type === 'question' ? 'otázka' : 'odpověď'}`}
+            >
+              <div
+                class:list={[
+                  'card-inner w-full aspect-[5/7] rounded-2xl p-5 flex flex-col justify-between shadow-xl select-none',
+                  card.type === 'question'
+                    ? 'bg-card-yellow text-brand-black'
+                    : 'bg-brand-white text-brand-black border border-gray-200',
+                ]}
+              >
+                <!-- Horní wordmark -->
+                <div class="text-xs font-bold uppercase tracking-widest opacity-40">
+                  DickObraz
+                </div>
+                <!-- Text karty -->
+                <p class="font-display text-xl uppercase leading-tight">{card.text}</p>
+                <!-- Dolní typ -->
+                <div class="text-xs font-bold uppercase tracking-widest opacity-40 text-right">
+                  {card.type === 'question' ? 'otázka' : 'odpověď'}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- Deck: Rozšíření -->
+    <div id="deck-rozsireni" role="tabpanel" aria-labelledby="tab-rozsireni" class="embla hidden" data-deck="rozsireni">
+      <div class="embla__viewport overflow-hidden cursor-grab active:cursor-grabbing" tabindex="0">
+        <div class="embla__container flex gap-4" style="touch-action: pan-y pinch-zoom;">
+          {rozsireniDeck.map((card, i) => (
+            <div
+              class="embla__slide flex-shrink-0 w-48 md:w-56"
+              role="group"
+              aria-label={`Karta ${i + 1} z ${rozsireniDeck.length}: ${card.type === 'question' ? 'otázka' : 'odpověď'}`}
+            >
+              <div
+                class:list={[
+                  'card-inner w-full aspect-[5/7] rounded-2xl p-5 flex flex-col justify-between shadow-xl select-none',
+                  card.type === 'question'
+                    ? 'bg-card-yellow text-brand-black'
+                    : 'bg-brand-white text-brand-black border border-gray-200',
+                ]}
+              >
+                <div class="text-xs font-bold uppercase tracking-widest opacity-40">
+                  DickObraz
+                </div>
+                <p class="font-display text-xl uppercase leading-tight">{card.text}</p>
+                <div class="text-xs font-bold uppercase tracking-widest opacity-40 text-right">
+                  {card.type === 'question' ? 'otázka' : 'odpověď'}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigace: šipky + progress bar -->
+    <div class="flex justify-center items-center gap-4 mt-6">
+      <button
+        id="btn-prev"
+        aria-label="Předchozí karta"
+        class="w-10 h-10 rounded-full bg-gray-800 text-brand-white flex items-center justify-center hover:bg-gray-700 active:scale-95 transition-all focus:outline-none focus:ring-2 focus:ring-brand-pink disabled:opacity-30 disabled:cursor-not-allowed"
+      >
+        ←
+      </button>
+
+      <!-- Progress bar + počítadlo -->
+      <div class="flex flex-col items-center gap-1.5 flex-1 max-w-48">
+        <div class="w-full h-1 bg-gray-700 rounded-full overflow-hidden">
+          <div id="embla-progress" class="h-full rounded-full transition-all duration-200" style="background:#ffd103; width:0%"></div>
+        </div>
+        <span id="embla-counter" class="text-xs text-gray-500" aria-live="polite"></span>
+      </div>
+
+      <button
+        id="btn-next"
+        aria-label="Další karta"
+        class="w-10 h-10 rounded-full bg-gray-800 text-brand-white flex items-center justify-center hover:bg-gray-700 active:scale-95 transition-all focus:outline-none focus:ring-2 focus:ring-brand-pink disabled:opacity-30 disabled:cursor-not-allowed"
+      >
+        →
+      </button>
+    </div>
+
+    <!-- CTA pod galerií -->
+    <div class="text-center mt-8 pt-6 border-t border-gray-800">
+      <p class="text-gray-400 text-sm mb-3">
+        Tohle je jen ochutnávka — celá hra má <strong class="text-brand-white">400 karet</strong>
+      </p>
+      <a
+        href={products.zaklad.addToCartUrl}
+        rel="noopener"
+        class="inline-block bg-brand-pink text-brand-white font-bold px-7 py-3 rounded-full hover:bg-pink-600 active:scale-95 transition-all duration-150 focus:outline-none focus:ring-4 focus:ring-brand-pink/50"
+      >
+        Do košíku 🛒
+      </a>
+    </div>
+
   </div>
 </section>
+
+<style>
+  /* Aktivní tab styl */
+  .tab-btn.active {
+    background-color: #ffd103;
+    color: #111111;
+  }
+  .tab-btn:not(.active) {
+    background-color: transparent;
+  }
+
+  /* Tilt mikrointerakce — centrovaná karta se lehce zvětší */
+  .embla__slide .card-inner {
+    transition: transform 0.2s ease, opacity 0.2s ease;
+    transform: scale(0.92);
+    opacity: 0.7;
+  }
+  .embla__slide.is-selected .card-inner {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  /* Vypni animace při prefers-reduced-motion */
+  @media (prefers-reduced-motion: reduce) {
+    .embla__slide .card-inner {
+      transition: none;
+      transform: scale(1) !important;
+      opacity: 1 !important;
+    }
+  }
+</style>
+
+<script>
+  import EmblaCarousel from 'embla-carousel';
+  import type { EmblaCarouselType } from 'embla-carousel';
+
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  let activeEmbla: EmblaCarouselType | null = null;
+
+  function updateProgress(embla: EmblaCarouselType) {
+    const total = embla.scrollSnapList().length;
+    const selected = embla.selectedScrollSnap();
+    const pct = total > 1 ? (selected / (total - 1)) * 100 : 100;
+
+    const bar = document.getElementById('embla-progress') as HTMLElement | null;
+    const counter = document.getElementById('embla-counter');
+    if (bar) bar.style.width = `${pct}%`;
+    if (counter) counter.textContent = `${selected + 1} / ${total}`;
+  }
+
+  function updateSelected(embla: EmblaCarouselType, viewport: HTMLElement) {
+    if (reducedMotion) return;
+    const selected = embla.selectedScrollSnap();
+    viewport.querySelectorAll('.embla__slide').forEach((slide, i) => {
+      slide.classList.toggle('is-selected', i === selected);
+    });
+  }
+
+  function initEmbla(deckEl: HTMLElement) {
+    if (activeEmbla) {
+      activeEmbla.destroy();
+      activeEmbla = null;
+    }
+
+    const viewport = deckEl.querySelector<HTMLElement>('.embla__viewport');
+    if (!viewport) return;
+
+    const btnPrev = document.getElementById('btn-prev') as HTMLButtonElement;
+    const btnNext = document.getElementById('btn-next') as HTMLButtonElement;
+
+    const embla = EmblaCarousel(viewport, {
+      loop: false,
+      align: 'center',
+      skipSnaps: false,
+      dragFree: false,
+    });
+
+    activeEmbla = embla;
+
+    updateProgress(embla);
+    updateSelected(embla, viewport);
+
+    embla.on('select', () => {
+      updateProgress(embla);
+      updateSelected(embla, viewport);
+      btnPrev.disabled = !embla.canScrollPrev();
+      btnNext.disabled = !embla.canScrollNext();
+    });
+
+    embla.on('init', () => {
+      btnPrev.disabled = !embla.canScrollPrev();
+      btnNext.disabled = !embla.canScrollNext();
+      if (!reducedMotion) {
+        viewport.querySelectorAll('.embla__slide')[0]?.classList.add('is-selected');
+      }
+    });
+
+    btnPrev.onclick = () => embla.scrollPrev();
+    btnNext.onclick = () => embla.scrollNext();
+  }
+
+  // Tab přepínání
+  const tabZaklad = document.getElementById('tab-zaklad')!;
+  const tabRozsireni = document.getElementById('tab-rozsireni')!;
+  const deckZaklad = document.getElementById('deck-zaklad')!;
+  const deckRozsireni = document.getElementById('deck-rozsireni')!;
+
+  function activateTab(tab: 'zaklad' | 'rozsireni') {
+    const isZaklad = tab === 'zaklad';
+
+    tabZaklad.setAttribute('aria-selected', String(isZaklad));
+    tabRozsireni.setAttribute('aria-selected', String(!isZaklad));
+    tabZaklad.classList.toggle('active', isZaklad);
+    tabRozsireni.classList.toggle('active', !isZaklad);
+
+    deckZaklad.classList.toggle('hidden', !isZaklad);
+    deckRozsireni.classList.toggle('hidden', isZaklad);
+
+    initEmbla(isZaklad ? deckZaklad : deckRozsireni);
+  }
+
+  tabZaklad.addEventListener('click', () => activateTab('zaklad'));
+  tabRozsireni.addEventListener('click', () => activateTab('rozsireni'));
+
+  // Klávesnicová navigace v tablistu
+  [tabZaklad, tabRozsireni].forEach((tab) => {
+    tab.addEventListener('keydown', (e: KeyboardEvent) => {
+      if (e.key === 'ArrowRight') {
+        tabRozsireni.focus();
+        activateTab('rozsireni');
+      } else if (e.key === 'ArrowLeft') {
+        tabZaklad.focus();
+        activateTab('zaklad');
+      }
+    });
+  });
+
+  // Inicializace při načtení
+  initEmbla(deckZaklad);
+</script>
