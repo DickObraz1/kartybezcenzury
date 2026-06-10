@@ -49,6 +49,7 @@ const p = products.zaklad;
         <a
           href={p.addToCartUrl}
           rel="noopener"
+          data-ga-product="zaklad"
           class="inline-block bg-brand-pink text-brand-white font-bold text-lg px-8 py-4 rounded-full hover:bg-pink-600 active:scale-95 transition-all duration-150 shadow-lg shadow-pink-500/30 focus:outline-none focus:ring-4 focus:ring-brand-pink/50"
           aria-label={`Přidat ${p.nazev} do košíku`}
         >
@@ -75,6 +76,7 @@ const p = products.zaklad;
         width="480"
         height="480"
         loading="eager"
+        fetchpriority="high"
         decoding="async"
         class="w-full max-w-xs md:max-w-sm rounded-card object-contain drop-shadow-2xl"
         onerror={`this.src='${p.fotoFallback}'`}

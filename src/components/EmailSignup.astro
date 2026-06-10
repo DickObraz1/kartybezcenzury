@@ -138,6 +138,9 @@
           // Success
           form.classList.add('hidden');
           successEl.classList.remove('hidden');
+          if (typeof (window as any).gtag === 'function') {
+            (window as any).gtag('event', 'newsletter_signup');
+          }
         } else {
           showError(data.error ?? 'Něco se posralo. Zkus to znovu.');
           btn.disabled = false;

@@ -8,8 +8,39 @@ interface Props {
 
 const {
   title = 'Karty bez cenzury — hra, kterou si nezahraješ s babičkou',
-  description = 'Česká party karetní hra pro dospělé. 80 otázek, 320 odpovědí. Kup teď na dickobraz.cz.',
+  description = 'Česká party karetní hra pro dospělé, co nemá zábrany. 80 otázek, 320 odpovědí, 400 karet. Kup teď na dickobraz.cz.',
 } = Astro.props;
+
+const siteUrl = 'https://kartybezcenzury.cz';
+const ogImage = `${siteUrl}/images/products/zaklad.jpg`;
+const ga4Id = import.meta.env.PUBLIC_GA4_ID ?? '';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: 'Karty bez cenzury – základní hra',
+  description: 'Česká party karetní hra pro dospělé. 80 otázek, 320 odpovědí, 400 karet celkem.',
+  image: ogImage,
+  url: siteUrl,
+  brand: {
+    '@type': 'Brand',
+    name: 'DickObraz',
+  },
+  offers: {
+    '@type': 'Offer',
+    priceCurrency: 'CZK',
+    price: '699',
+    availability: 'https://schema.org/InStock',
+    url: 'https://www.dickobraz.cz/p/karty-proti-lidskosti?addtocart=1&quantity=1&return=cart',
+  },
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: '5',
+    reviewCount: '16',
+    bestRating: '5',
+    worstRating: '1',
+  },
+};
 ---
 
 <!doctype html>
@@ -19,34 +50,90 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
+    <link rel="canonical" href={siteUrl} />
 
     <title>{title}</title>
 
+    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
 
+    <!-- Google Fonts preconnect — urychlí načtení písma -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
     <!-- Open Graph -->
+    <meta property="og:type" content="product" />
+    <meta property="og:url" content={siteUrl} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:type" content="product" />
-    <meta property="og:url" content="https://kartybezcenzury.cz" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="800" />
+    <meta property="og:image:height" content="800" />
+    <meta property="og:locale" content="cs_CZ" />
+    <meta property="og:site_name" content="DickObraz" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- JSON-LD Product structured data -->
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+    <!-- GA4 — načte se jen po souhlasu s cookies -->
+    <script is:inline define:vars={{ ga4Id }}>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { window.dataLayer.push(arguments); }
+      window.gtag = gtag;
+
+      function loadGA4(id) {
+        if (!id || window.__ga4Loaded) return;
+        window.__ga4Loaded = true;
+        const s = document.createElement('script');
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + id;
+        s.async = true;
+        document.head.appendChild(s);
+        gtag('js', new Date());
+        gtag('config', id);
+      }
+
+      window._loadGA4 = function() { loadGA4(ga4Id); };
+
+      if (ga4Id && localStorage.getItem('cookieConsent') === 'accepted') {
+        loadGA4(ga4Id);
+      }
+    </script>
   </head>
   <body>
-    <slot />
+    <main>
+      <slot />
+    </main>
     <script>
       // Scroll reveal
-      const observer = new IntersectionObserver(
+      const revealObserver = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
               entry.target.classList.add('visible');
-              observer.unobserve(entry.target);
+              revealObserver.unobserve(entry.target);
             }
           });
         },
         { threshold: 0.1 }
       );
-      document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+      document.querySelectorAll('.reveal').forEach((el) => revealObserver.observe(el));
+
+      // GA4: add_to_cart event tracking — sleduje kliknutí na všechna CTA
+      document.addEventListener('click', (e) => {
+        const link = (e.target as Element).closest('[data-ga-product]');
+        if (!link) return;
+        const product = (link as HTMLElement).dataset.gaProduct;
+        if (typeof (window as any).gtag === 'function') {
+          (window as any).gtag('event', 'add_to_cart', { product });
+        }
+      });
     </script>
   </body>
 </html>

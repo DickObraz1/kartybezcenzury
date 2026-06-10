@@ -34,8 +34,8 @@ const faqs = [
       Máš otázku?
     </h2>
 
-    <dl class="space-y-4">
-      {faqs.map((faq, i) => (
+    <div class="space-y-4">
+      {faqs.map((faq) => (
         <details class="group bg-brand-white rounded-card border border-gray-200 overflow-hidden">
           <summary class="flex items-center justify-between gap-4 px-5 py-4 cursor-pointer list-none font-bold text-brand-black hover:text-brand-wine transition-colors">
             <span>{faq.q}</span>
@@ -48,6 +48,6 @@ const faqs = [
           </div>
         </details>
       ))}
-    </dl>
+    </div>
   </div>
 </section>

@@ -1,0 +1,62 @@
+---
+// GDPR cookie consent banner — GA4 se načte jen po souhlasu
+---
+
+<div
+  id="cookie-banner"
+  role="dialog"
+  aria-label="Souhlas s cookies"
+  class="fixed bottom-0 left-0 right-0 z-[60] bg-brand-black border-t border-gray-700 px-5 py-4 hidden"
+>
+  <div class="max-w-3xl mx-auto flex flex-col sm:flex-row items-start sm:items-center gap-4">
+    <p class="text-sm text-gray-300 flex-1">
+      Používáme analytické cookies (Google Analytics), abychom věděli, co na stránce lidi baví.
+      Žádný špionážní bullshit.{' '}
+      <a
+        href="https://www.dickobraz.cz/info/ochrana-osobnich-udaju"
+        target="_blank"
+        rel="noopener"
+        class="underline hover:text-brand-pink"
+      >
+        Zjistit víc.
+      </a>
+    </p>
+    <div class="flex gap-3 flex-shrink-0">
+      <button
+        id="cookie-accept"
+        type="button"
+        class="bg-brand-pink text-brand-white font-bold text-sm px-5 py-2.5 rounded-full hover:bg-pink-600 active:scale-95 transition-all focus:outline-none focus:ring-2 focus:ring-brand-pink/50"
+      >
+        Jasně, OK
+      </button>
+      <button
+        id="cookie-reject"
+        type="button"
+        class="text-gray-400 font-semibold text-sm px-5 py-2.5 rounded-full border border-gray-700 hover:border-gray-500 hover:text-gray-200 transition-all focus:outline-none focus:ring-2 focus:ring-gray-600"
+      >
+        Odmítám
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const banner = document.getElementById('cookie-banner');
+  const acceptBtn = document.getElementById('cookie-accept');
+  const rejectBtn = document.getElementById('cookie-reject');
+
+  if (banner && !localStorage.getItem('cookieConsent')) {
+    banner.classList.remove('hidden');
+  }
+
+  acceptBtn?.addEventListener('click', () => {
+    localStorage.setItem('cookieConsent', 'accepted');
+    banner?.classList.add('hidden');
+    (window as any)._loadGA4?.();
+  });
+
+  rejectBtn?.addEventListener('click', () => {
+    localStorage.setItem('cookieConsent', 'rejected');
+    banner?.classList.add('hidden');
+  });
+</script>
