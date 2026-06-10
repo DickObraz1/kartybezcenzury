@@ -1,10 +1,9 @@
 ---
-// PLACEHOLDER: ceny a slug bundlu přijdou z products.json ve Fázi 2
-// Výpočet úspory: cena_zaklad + cena_rozsireni - cena_bundle
-const placeholderPriceBase = 699;
-const placeholderPriceExtension = 399; // PLACEHOLDER — doplnit
-const placeholderPriceBundle = 899;    // PLACEHOLDER — doplnit
-const saving = placeholderPriceBase + placeholderPriceExtension - placeholderPriceBundle;
+import products from '../data/products.json';
+
+const b = products.balicek;
+const zaklad = products.zaklad;
+const rozsireni = products.rozsireni;
 ---
 
 <section class="bg-brand-pink py-16 md:py-24 px-5 reveal">
@@ -13,58 +12,72 @@ const saving = placeholderPriceBase + placeholderPriceExtension - placeholderPri
       <!-- Dekorativní prvek -->
       <div class="absolute top-0 right-0 w-64 h-64 rounded-full bg-brand-pink opacity-10 blur-3xl pointer-events-none"></div>
 
-      <!-- Badge úspory -->
-      <div class="inline-flex items-center gap-2 bg-brand-wine text-brand-white text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-6">
-        <span>💰</span>
-        <!-- PLACEHOLDER: dynamicky ze součtu cen -->
-        <span>Ušetříš {saving} Kč</span>
+      <!-- Badges -->
+      <div class="flex flex-wrap gap-2 mb-6">
+        <div class="inline-flex items-center gap-2 bg-brand-wine text-brand-white text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full">
+          <span>💰</span>
+          <span>Ušetříš {b.usetris} {b.mena}</span>
+        </div>
+        <div class="inline-flex items-center gap-2 bg-brand-pink text-brand-white text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full">
+          <span>−{b.slevaProcent} %</span>
+        </div>
       </div>
 
-      <h2 class="font-display text-4xl md:text-5xl uppercase leading-none text-brand-white mb-4">
+      <h2 class="font-display text-4xl md:text-5xl uppercase leading-none text-brand-white mb-3">
         Základ +<br />
-        <span class="text-brand-pink">Rozšíření</span><br />
+        <span class="text-brand-pink">Mezi nohama</span><br />
         za méně
       </h2>
 
-      <!-- PLACEHOLDER: popis bundle -->
-      <p class="text-gray-300 text-lg mb-8 max-w-lg">
-        Kup oboje najednou a ušetři. Víc karet, víc šílenosti, jedno tlačítko. Ideální tip na narozeniny (pro toho, koho fakt máš rád).
+      <p class="text-brand-pink font-bold text-lg mb-4 italic">„{b.tagline}"</p>
+
+      <p class="text-gray-300 mb-8 max-w-lg">
+        {b.popisKratky}
       </p>
 
       <!-- Co je v balíčku -->
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
         <div class="bg-gray-900 rounded-xl p-4 border border-gray-700">
-          <p class="font-bold text-brand-white mb-1">Karty bez cenzury</p>
-          <p class="text-sm text-gray-400">80 otázek · 320 odpovědí</p>
-          <!-- PLACEHOLDER: cena -->
-          <p class="text-gray-500 text-sm line-through mt-2">{placeholderPriceBase} Kč</p>
+          <p class="font-bold text-brand-white mb-1">{zaklad.nazev.split('–')[0].trim()}</p>
+          <p class="text-sm text-gray-400">{zaklad.obsah.celkemKaret} karet · {zaklad.obsah.otazky} otázek + {zaklad.obsah.odpovedi} odpovědí</p>
+          <p class="text-gray-500 text-sm line-through mt-2">{zaklad.cena} {zaklad.mena}</p>
         </div>
         <div class="bg-gray-900 rounded-xl p-4 border border-gray-700">
-          <p class="font-bold text-brand-white mb-1">Rozšíření</p>
-          <!-- PLACEHOLDER: popis rozšíření -->
-          <p class="text-sm text-gray-400">Nové karty · Ještě horší</p>
-          <!-- PLACEHOLDER: cena -->
-          <p class="text-gray-500 text-sm line-through mt-2">{placeholderPriceExtension} Kč</p>
+          <p class="font-bold text-brand-white mb-1">{rozsireni.nazev}</p>
+          <p class="text-sm text-gray-400">{rozsireni.obsah.celkemKaret} karet · {rozsireni.obsah.otazky} otázek + {rozsireni.obsah.odpovedi} odpovědí</p>
+          <p class="text-gray-500 text-sm line-through mt-2">{rozsireni.cena} {rozsireni.mena}</p>
         </div>
       </div>
 
-      <!-- Cena bundle + CTA -->
-      <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-        <div>
-          <p class="text-sm text-gray-400 uppercase tracking-wide">Balíček</p>
-          <!-- PLACEHOLDER: cena bundle -->
-          <p class="text-5xl font-display text-brand-white">{placeholderPriceBundle} Kč</p>
-          <p class="text-brand-pink text-sm font-bold">místo {placeholderPriceBase + placeholderPriceExtension} Kč</p>
+      <!-- Cena bundle + fotka + CTA -->
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+          <div>
+            <p class="text-sm text-gray-400 uppercase tracking-wide">Balíček celkem</p>
+            <p class="text-5xl font-display text-brand-white">{b.cena} {b.mena}</p>
+            <p class="text-brand-pink text-sm font-bold">místo {b.puvodniCena} {b.mena}</p>
+          </div>
+          <a
+            href={b.addToCartUrl}
+            rel="noopener"
+            class="inline-block bg-brand-pink text-brand-white font-bold text-lg px-8 py-4 rounded-full hover:bg-pink-600 active:scale-95 transition-all duration-150 shadow-lg shadow-pink-500/30 focus:outline-none focus:ring-4 focus:ring-brand-pink/50"
+            aria-label={`Koupit ${b.nazev}`}
+          >
+            Koupit balíček 🛒
+          </a>
         </div>
 
-        <!-- PLACEHOLDER href: sestavit ze slugu bundle ve Fázi 3 -->
-        <a
-          href="#"
-          class="inline-block bg-brand-pink text-brand-white font-bold text-lg px-8 py-4 rounded-full hover:bg-pink-600 active:scale-95 transition-all duration-150 shadow-lg shadow-pink-500/30 focus:outline-none focus:ring-4 focus:ring-brand-pink/50"
-          aria-label="Koupit balíček – základ + rozšíření"
-        >
-          Koupit balíček 🛒
-        </a>
+        <!-- Fotka balíčku -->
+        <img
+          src={b.foto}
+          alt={b.nazev}
+          width="200"
+          height="200"
+          loading="lazy"
+          decoding="async"
+          class="w-32 md:w-44 object-contain drop-shadow-xl flex-shrink-0"
+          onerror={`this.src='${b.fotoFallback}'`}
+        />
       </div>
     </div>
   </div>

@@ -1,5 +1,7 @@
 ---
-// PLACEHOLDER: texty dle DickObraz tónu — přizpůsobit po schválení
+import products from '../data/products.json';
+
+const p = products.zaklad;
 ---
 
 <section class="bg-brand-white py-16 md:py-24 px-5 reveal">
@@ -50,14 +52,17 @@
 
     <!-- Jak se hraje -->
     <div class="mt-12 bg-brand-gray rounded-card p-6 md:p-8">
-      <h3 class="font-display text-2xl md:text-3xl uppercase text-brand-black mb-6 text-center">
+      <h3 class="font-display text-2xl md:text-3xl uppercase text-brand-black mb-2 text-center">
         Jak se hraje?
       </h3>
+      <p class="text-center text-brand-gray-dark text-sm mb-6">
+        {p.pocetHracu} · {p.obsah.celkemKaret} karet ({p.obsah.otazky} otázek + {p.obsah.odpovedi} odpovědí)
+      </p>
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
         {[
-          { step: '1', icon: '🃏', title: 'Otočí se černá karta', desc: 'Jeden hráč přečte otázku nebo větu s mezerou.' },
-          { step: '2', icon: '✋', title: 'Každý zahraje odpověď', desc: 'Ostatní hráči hodí svou nejlepší (nejhorší) bílou kartu.' },
-          { step: '3', icon: '😂', title: 'Vítěz bere', desc: 'Čtenář vybere nejlepší (nebo nejhorší) kombinaci. Vítěz sbírá body.' },
+          { icon: '🃏', title: 'Otočí se černá karta', desc: 'Jeden hráč přečte otázku nebo větu s mezerou.' },
+          { icon: '✋', title: 'Každý zahraje odpověď', desc: 'Ostatní hráči hodí svou nejlepší (nejhorší) bílou kartu.' },
+          { icon: '😂', title: 'Vítěz bere', desc: 'Čtenář vybere nejlepší kombinaci. Vítěz sbírá body.' },
         ].map((item) => (
           <div>
             <div class="text-4xl mb-3">{item.icon}</div>
@@ -66,6 +71,16 @@
           </div>
         ))}
       </div>
+
+      <!-- Vlastnosti produktu -->
+      <ul class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-2">
+        {p.vlastnosti.map((v) => (
+          <li class="flex items-start gap-2 text-sm text-brand-gray-dark">
+            <span class="text-brand-pink flex-shrink-0">✓</span>
+            <span>{v}</span>
+          </li>
+        ))}
+      </ul>
     </div>
   </div>
 </section>

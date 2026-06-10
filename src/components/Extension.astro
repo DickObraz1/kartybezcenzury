@@ -1,6 +1,7 @@
 ---
-// PLACEHOLDER: data rozšíření přijdou z products.json ve Fázi 2
-// CTA href sestavit ze slugu rozšíření ve Fázi 3
+import products from '../data/products.json';
+
+const p = products.rozsireni;
 ---
 
 <section class="bg-brand-black text-brand-white py-16 md:py-24 px-5 reveal">
@@ -14,21 +15,25 @@
     <div class="md:grid md:grid-cols-2 md:gap-12 md:items-center">
       <!-- Text -->
       <div>
-        <h2 class="font-display text-4xl md:text-5xl uppercase leading-none mb-4">
-          Přidej ještě víc<br />
-          <span class="text-brand-pink">pěkný sraček</span>
+        <h2 class="font-display text-4xl md:text-5xl uppercase leading-none mb-3">
+          {p.nazev.split(':')[1]?.trim() ?? p.nazev}
         </h2>
+        <p class="text-brand-pink font-bold text-lg mb-4 italic">„{p.tagline}"</p>
 
-        <!-- PLACEHOLDER: popis rozšíření z dickobraz.cz -->
-        <p class="text-gray-300 text-lg mb-6">
-          Základní hra tě omrzela? Rozšíření přidává X nových karet, ještě temnější humor a situace, po kterých se nikdo nepodívá tobě do očí.
+        <p class="text-gray-300 mb-5">
+          {p.popisKratky}
         </p>
 
-        <!-- Co rozšíření přidává -->
-        <ul class="space-y-2 mb-8">
+        <!-- Spolupráce badge -->
+        <div class="bg-gray-900 border border-gray-700 rounded-xl p-3 mb-5 text-sm text-gray-300">
+          🩺 <span class="text-brand-white font-semibold">Odborná spolupráce:</span> {p.spoluprace}
+        </div>
+
+        <!-- Obsah -->
+        <ul class="space-y-2 mb-5">
           {[
-            'X nových černých otázkových karet',
-            'X nových bílých odpovědních karet',
+            `${p.obsah.otazky} nových černých otázkových karet`,
+            `${p.obsah.odpovedi} nových bílých odpovědních karet`,
             '100% kompatibilní se základní hrou',
             'Ještě méně vhodné pro slušnou společnost',
           ].map((item) => (
@@ -39,30 +44,39 @@
           ))}
         </ul>
 
+        <!-- Varování: vyžaduje základní hru -->
+        <div class="bg-brand-wine/20 border border-brand-wine/40 rounded-xl px-4 py-3 mb-6 text-sm text-gray-300">
+          ⚠️ {p.vyzaduje}
+        </div>
+
         <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
           <div>
-            <!-- PLACEHOLDER: cena rozšíření -->
             <p class="text-sm text-gray-400 uppercase tracking-wide">Rozšíření</p>
-            <p class="text-3xl font-display">??? Kč</p>
+            <p class="text-3xl font-display">{p.cena} {p.mena}</p>
           </div>
-
-          <!-- PLACEHOLDER href: sestavit ze slugu ve Fázi 3 -->
           <a
-            href="#"
+            href={p.addToCartUrl}
+            rel="noopener"
             class="inline-block bg-brand-wine text-brand-white font-bold px-7 py-3.5 rounded-full hover:bg-red-900 active:scale-95 transition-all duration-150 focus:outline-none focus:ring-4 focus:ring-brand-wine/50"
-            aria-label="Přidat rozšíření do košíku"
+            aria-label={`Přidat ${p.nazev} do košíku`}
           >
             Přidat rozšíření 🛒
           </a>
         </div>
       </div>
 
-      <!-- Fotka rozšíření placeholder -->
-      <div class="mt-10 md:mt-0">
-        <!-- PLACEHOLDER: fotka rozšíření – dodat ve Fázi 2 -->
-        <div class="w-full aspect-square bg-gray-800 rounded-card flex items-center justify-center text-gray-500 text-sm border border-gray-700 text-center px-4">
-          📦 Packshot rozšíření<br />(foto dodat)
-        </div>
+      <!-- Fotka rozšíření -->
+      <div class="mt-10 md:mt-0 flex justify-center">
+        <img
+          src={p.foto}
+          alt={p.nazev}
+          width="400"
+          height="400"
+          loading="lazy"
+          decoding="async"
+          class="w-full max-w-xs rounded-card object-contain drop-shadow-2xl"
+          onerror={`this.src='${p.fotoFallback}'`}
+        />
       </div>
     </div>
   </div>

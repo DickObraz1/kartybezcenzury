@@ -1,35 +1,70 @@
 ---
+import products from '../data/products.json';
+
 const year = new Date().getFullYear();
 ---
 
 <footer class="bg-brand-black text-gray-400 px-5 py-10">
   <div class="max-w-2xl mx-auto">
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 mb-8">
-      <!-- Branding -->
+      <!-- Branding + logo -->
       <div>
-        <p class="font-display text-brand-white text-xl uppercase mb-2">DickObraz</p>
+        <a href="https://www.dickobraz.cz" target="_blank" rel="noopener" aria-label="DickObraz eshop">
+          <img
+            src="/images/dickobraz-logo.png"
+            alt="DickObraz"
+            width="140"
+            height="48"
+            loading="lazy"
+            decoding="async"
+            class="h-10 w-auto object-contain mb-3"
+          />
+        </a>
         <p class="text-sm">Věci, které by tvoje babička asi neschválila.</p>
-        <!-- PLACEHOLDER: logo DickObraz – dodat -->
       </div>
 
-      <!-- Odkazy -->
+      <!-- Produkty -->
       <div>
-        <p class="text-brand-white text-sm font-bold uppercase tracking-wide mb-3">Eshop</p>
+        <p class="text-brand-white text-sm font-bold uppercase tracking-wide mb-3">Produkty</p>
         <ul class="space-y-2 text-sm">
-          <li><a href="https://www.dickobraz.cz" target="_blank" rel="noopener noreferrer" class="hover:text-brand-pink transition-colors">dickobraz.cz</a></li>
-          <li><a href="https://www.dickobraz.cz/p/karty-proti-lidskosti" target="_blank" rel="noopener noreferrer" class="hover:text-brand-pink transition-colors">Karty bez cenzury</a></li>
-          <!-- PLACEHOLDER: odkaz na rozšíření -->
-          <li><a href="#" class="hover:text-brand-pink transition-colors">Rozšíření</a></li>
+          <li>
+            <a href={products.zaklad.addToCartUrl} rel="noopener" class="hover:text-brand-pink transition-colors">
+              Karty bez cenzury (699 Kč)
+            </a>
+          </li>
+          <li>
+            <a href={products.rozsireni.addToCartUrl} rel="noopener" class="hover:text-brand-pink transition-colors">
+              Rozšíření: Mezi nohama (249 Kč)
+            </a>
+          </li>
+          <li>
+            <a href={products.balicek.addToCartUrl} rel="noopener" class="hover:text-brand-pink transition-colors">
+              Komplet balíček (829 Kč)
+            </a>
+          </li>
+          <li>
+            <a href="https://www.dickobraz.cz" target="_blank" rel="noopener" class="hover:text-brand-pink transition-colors">
+              dickobraz.cz →
+            </a>
+          </li>
         </ul>
       </div>
 
-      <!-- Právní + sociální sítě -->
+      <!-- Právní + sítě -->
       <div>
         <p class="text-brand-white text-sm font-bold uppercase tracking-wide mb-3">Informace</p>
         <ul class="space-y-2 text-sm">
-          <li><a href="https://www.dickobraz.cz/info/obchodni-podminky" target="_blank" rel="noopener noreferrer" class="hover:text-brand-pink transition-colors">Obchodní podmínky</a></li>
-          <li><a href="https://www.dickobraz.cz/info/ochrana-osobnich-udaju" target="_blank" rel="noopener noreferrer" class="hover:text-brand-pink transition-colors">Ochrana osobních údajů</a></li>
-          <!-- PLACEHOLDER: sociální sítě DickObraz -->
+          <li>
+            <a href="https://www.dickobraz.cz/info/obchodni-podminky" target="_blank" rel="noopener" class="hover:text-brand-pink transition-colors">
+              Obchodní podmínky
+            </a>
+          </li>
+          <li>
+            <a href="https://www.dickobraz.cz/info/ochrana-osobnich-udaju" target="_blank" rel="noopener" class="hover:text-brand-pink transition-colors">
+              Ochrana osobních údajů
+            </a>
+          </li>
+          <!-- TODO: doplnit reálné URL sociálních sítí DickObraz -->
           <li><a href="#" class="hover:text-brand-pink transition-colors">Instagram</a></li>
           <li><a href="#" class="hover:text-brand-pink transition-colors">Facebook</a></li>
         </ul>
@@ -42,7 +77,8 @@ const year = new Date().getFullYear();
         <strong class="text-gray-500">🔞 16+ obsah.</strong> Hra obsahuje dospělý humor a vulgární obsah. Není vhodná pro osoby mladší 16 let.
       </p>
       <p>
-        © {year} DickObraz · Všechna práva vyhrazena · <a href="https://www.dickobraz.cz" class="hover:text-brand-pink transition-colors">dickobraz.cz</a>
+        © {year} DickObraz · Všechna práva vyhrazena ·
+        <a href="https://www.dickobraz.cz" rel="noopener" class="hover:text-brand-pink transition-colors">dickobraz.cz</a>
       </p>
     </div>
   </div>

@@ -1,6 +1,7 @@
 ---
-// Sticky add-to-cart bar — zobrazí se po odscrollování heru
-// PLACEHOLDER: cena a href sestavit ze products.json ve Fázi 3
+import products from '../data/products.json';
+
+const p = products.zaklad;
 ---
 
 <div
@@ -9,16 +10,15 @@
   aria-label="Rychlý nákup"
 >
   <div>
-    <p class="text-xs text-gray-400 leading-none">Karty bez cenzury</p>
-    <!-- PLACEHOLDER: cena -->
-    <p class="text-xl font-display text-brand-white">699 Kč</p>
+    <p class="text-xs text-gray-400 leading-none">{p.nazev.split('–')[0].trim()}</p>
+    <p class="text-xl font-display text-brand-white">{p.cena} {p.mena}</p>
   </div>
 
-  <!-- PLACEHOLDER href: sestaví se ze slug ve Fázi 3 -->
   <a
-    href="#"
+    href={p.addToCartUrl}
+    rel="noopener"
     class="bg-brand-pink text-brand-white font-bold px-6 py-3 rounded-full text-base hover:bg-pink-600 active:scale-95 transition-all duration-150 whitespace-nowrap focus:outline-none focus:ring-4 focus:ring-brand-pink/50"
-    aria-label="Přidat do košíku"
+    aria-label={`Přidat ${p.nazev} do košíku`}
   >
     Do košíku 🛒
   </a>

@@ -1,23 +1,23 @@
 ---
-// PLACEHOLDER: recenze a počty dodat (z eshopu nebo ručně)
+import products from '../data/products.json';
+
+const p = products.zaklad;
+
 const reviews = [
   {
-    name: 'Honza K.',
+    name: 'Karolína',
     stars: 5,
-    text: 'Nejlepší koupě tohoto roku. Kamarádi mě nenávidí a zároveň mě milují. 10/10.',
-    // PLACEHOLDER: reálná recenze z eshopu
+    text: 'Doporučuji hrát ve skupince přátel, kde se chcete zbavit lidí, co nemají váš humor.',
   },
   {
-    name: 'Tereza M.',
+    name: 'Jan Klimeš',
     stars: 5,
-    text: 'Koupila jsem to jako dárek k narozeninám. Oslava skončila ve 4 ráno. Doporučuji.',
-    // PLACEHOLDER: reálná recenze z eshopu
+    text: 'Konečně dobrá a vtipná karetní hra na párty, která se neomrzí. Doporučuji :)',
   },
   {
-    name: 'Martin P.',
+    name: 'Kristýna Novotná',
     stars: 5,
-    text: 'Varování: jestli hrajete s šéfem, ujistěte se, že umí srandu. Jinak 5 hvězd.',
-    // PLACEHOLDER: reálná recenze z eshopu
+    text: 'Vtipné, originální karty plné nekorektnosti – prostě jak název vypovídá, bez cenzury!',
   },
 ];
 ---
@@ -26,16 +26,22 @@ const reviews = [
   <div class="max-w-2xl mx-auto">
     <!-- Stats -->
     <div class="grid grid-cols-3 gap-4 mb-12 text-center">
-      {[
-        { number: '1 000+', label: 'prodaných her' }, // PLACEHOLDER: reálné číslo
-        { number: '5 ★', label: 'průměrné hodnocení' },
-        { number: '16+', label: 'pro dospělé' },
-      ].map((stat) => (
-        <div class="bg-brand-gray rounded-card p-4">
-          <p class="font-display text-3xl md:text-4xl text-brand-black">{stat.number}</p>
-          <p class="text-xs text-brand-gray-dark uppercase tracking-wide mt-1">{stat.label}</p>
+      <div class="bg-brand-gray rounded-card p-4">
+        <p class="font-display text-3xl md:text-4xl text-brand-black">1 000+</p>
+        <p class="text-xs text-brand-gray-dark uppercase tracking-wide mt-1">prodaných her</p>
+      </div>
+      <div class="bg-brand-gray rounded-card p-4">
+        <div class="flex justify-center gap-0.5 mb-1" aria-label={`${p.hodnoceni} z 5 hvězd`}>
+          {Array.from({ length: p.hodnoceni }).map(() => (
+            <span class="text-yellow-400 text-xl leading-none">★</span>
+          ))}
         </div>
-      ))}
+        <p class="text-xs text-brand-gray-dark uppercase tracking-wide">{p.pocetRecenzi} recenzí</p>
+      </div>
+      <div class="bg-brand-gray rounded-card p-4">
+        <p class="font-display text-3xl md:text-4xl text-brand-black">16+</p>
+        <p class="text-xs text-brand-gray-dark uppercase tracking-wide mt-1">pro dospělé</p>
+      </div>
     </div>
 
     <h2 class="font-display text-4xl md:text-5xl uppercase text-brand-black text-center mb-8">
@@ -51,7 +57,7 @@ const reviews = [
               <span class="text-yellow-400 text-lg">★</span>
             ))}
           </div>
-          <p class="text-brand-black text-sm leading-relaxed mb-4">"{review.text}"</p>
+          <p class="text-brand-black text-sm leading-relaxed mb-4">„{review.text}"</p>
           <p class="text-brand-gray-dark text-xs font-bold">— {review.name}</p>
         </div>
       ))}

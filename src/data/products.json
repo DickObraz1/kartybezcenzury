@@ -1,0 +1,63 @@
+{
+  "zaklad": {
+    "nazev": "Karty bez cenzury – karty proti lidskosti",
+    "slug": "karty-proti-lidskosti",
+    "kod": "P00043",
+    "cena": 699,
+    "mena": "Kč",
+    "skladem": true,
+    "hodnoceni": 5,
+    "pocetRecenzi": 16,
+    "addToCartUrl": "https://www.dickobraz.cz/p/karty-proti-lidskosti?addtocart=1&quantity=1&return=cart",
+    "tagline": "Hra, kterou si nezahraješ s babičkou. A taky důvod, proč už tě k ní nepustí.",
+    "popisKratky": "Inspirované legendární hrou, ale komplet v češtině – a ještě drzejší. Tahle sprostá, zlomyslná a kurevsky zábavná hra rozjede každou párty, rozlučku nebo večer s kámoši. Hoď si panáka, zamíchej karty a připrav se smát i červenat.",
+    "obsah": { "otazky": 80, "odpovedi": 320, "celkemKaret": 400 },
+    "pocetHracu": "3–10 hráčů",
+    "vlastnosti": [
+      "Přizpůsobeno Česku, žádný Google Translate",
+      "Hratelné i bez znalosti angličtiny",
+      "400 karet, žádná odfláklá mini sada",
+      "Extrémně dobrá kvalita karet – žádný papírák z tiskárny"
+    ],
+    "videoUrl": "https://www.youtube.com/embed/FEWvG7v-g7k",
+    "pravidlaPdf": "https://dickobraz-cz.s51.cdn-upgates.com/3/366464f27ab1c9-pravidla-2.pdf",
+    "foto": "/images/products/zaklad.jpg",
+    "fotoFallback": "https://dickobraz-cz.s51.cdn-upgates.com/_cache/f/9/f98e92a561cc93e09f53c5fa874d568a-karty-bez-cenzury-3000.png"
+  },
+  "rozsireni": {
+    "nazev": "Karty bez cenzury: Mezi nohama",
+    "slug": "karty-bez-cenzury-1-rozsireni",
+    "kod": "P00049",
+    "cena": 249,
+    "mena": "Kč",
+    "skladem": true,
+    "hodnoceni": 5,
+    "pocetRecenzi": 1,
+    "addToCartUrl": "https://www.dickobraz.cz/p/karty-bez-cenzury-1-rozsireni?addtocart=1&quantity=1&return=cart",
+    "tagline": "Věci, o kterých se šeptá v čekárně? Teď se o nich křičí u stolu.",
+    "popisKratky": "Rozšíření Karet bez cenzury, které tě zavede hluboko… až mezi nohy. 100 nových karet plných gynekologie, sexuality a tělesných trapasů. Spolupráce s gynekoložkou Kamilou Žižkovou.",
+    "obsah": { "otazky": 20, "odpovedi": 80, "celkemKaret": 100 },
+    "spoluprace": "Vytvořeno s gynekoložkou Kamilou Žižkovou (@moje_gynpor, podcast Pindy z Gindy)",
+    "vyzaduje": "Není to samostatná hra – potřebuješ základní Karty bez cenzury.",
+    "videoUrl": "https://player.vimeo.com/video/1163554495",
+    "foto": "/images/products/rozsireni.png",
+    "fotoFallback": "https://dickobraz-cz.s51.cdn-upgates.com/_cache/d/5/d55f245d67185ceda873eec109cbb3d4-krabicka-bez-pozadi.png"
+  },
+  "balicek": {
+    "nazev": "KOMPLET BEZ CENZURY — Základ + Mezi nohama",
+    "slug": "komplet-bez-cenzury-zaklad-mezi-nohama",
+    "kod": "P00063",
+    "cena": 829,
+    "puvodniCena": 948,
+    "usetris": 119,
+    "slevaProcent": 13,
+    "mena": "Kč",
+    "skladem": true,
+    "addToCartUrl": "https://www.dickobraz.cz/p/komplet-bez-cenzury-zaklad-mezi-nohama?addtocart=1&quantity=1&return=cart",
+    "tagline": "Půlka srandy je amatérská chyba. Ber celej balík.",
+    "popisKratky": "Základní hra tě rozjede. Rozšíření Mezi nohama ti pak ukáže, jak hluboko se ten večírek dá dostat. Dohromady 948 Kč v kuse — v kompletu za 829 Kč. Tohle je celá nálož na celej večer.",
+    "obsah": { "celkemKaret": 500 },
+    "foto": "/images/products/balicek.jpg",
+    "fotoFallback": "https://dickobraz-cz.s51.cdn-upgates.com/_cache/7/a/7af59bc6e11f7252da783e7ce6daff2d-bundle-karty-bez-cenzury.jpg"
+  }
+}

@@ -1,5 +1,8 @@
 ---
-// PLACEHOLDER: headline, podtitul, cena a CTA se nahradí reálnými daty ve Fázi 2
+import { Image } from 'astro:assets';
+import products from '../data/products.json';
+
+const p = products.zaklad;
 ---
 
 <section class="relative bg-brand-black text-brand-white overflow-hidden min-h-screen flex flex-col justify-center px-5 py-16 md:py-24">
@@ -12,10 +15,17 @@
   <div class="relative max-w-5xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
     <!-- Levý sloupec: text -->
     <div>
-      <!-- Badge -->
-      <div class="inline-flex items-center gap-2 bg-brand-wine text-brand-white text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-6">
-        <span>🔥</span>
-        <span>16+ · Česká hra</span>
+      <!-- Badge + hodnocení -->
+      <div class="flex flex-wrap items-center gap-3 mb-6">
+        <div class="inline-flex items-center gap-2 bg-brand-wine text-brand-white text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full">
+          <span>🔥</span>
+          <span>16+ · Česká hra</span>
+        </div>
+        <div class="inline-flex items-center gap-1.5 text-sm text-gray-300">
+          <span class="text-yellow-400 text-base leading-none">★★★★★</span>
+          <span class="font-bold text-brand-white">{p.hodnoceni}/5</span>
+          <span class="text-gray-500">({p.pocetRecenzi} recenzí)</span>
+        </div>
       </div>
 
       <!-- Headline -->
@@ -25,37 +35,50 @@
         s babičkou
       </h1>
 
-      <!-- Podtitul -->
-      <!-- PLACEHOLDER: krátký popis – zkopírovat z dickobraz.cz -->
+      <!-- Tagline -->
       <p class="text-lg md:text-xl text-gray-300 mb-8 max-w-md">
-        80 otázek, 320 odpovědí. Party karetní hra pro dospělé, která zabije každý rodinný sraz.
+        {p.tagline}
       </p>
 
       <!-- Cena + CTA -->
       <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
         <div>
           <p class="text-sm text-gray-400 uppercase tracking-wide">Základní hra</p>
-          <!-- PLACEHOLDER: cena ze products.json -->
-          <p class="text-4xl font-display text-brand-white">699&nbsp;Kč</p>
+          <p class="text-4xl font-display text-brand-white">{p.cena}&nbsp;{p.mena}</p>
         </div>
-
-        <!-- PLACEHOLDER href: sestaví se ze slugu ve Fázi 3 -->
         <a
-          href="#"
+          href={p.addToCartUrl}
+          rel="noopener"
           class="inline-block bg-brand-pink text-brand-white font-bold text-lg px-8 py-4 rounded-full hover:bg-pink-600 active:scale-95 transition-all duration-150 shadow-lg shadow-pink-500/30 focus:outline-none focus:ring-4 focus:ring-brand-pink/50"
-          aria-label="Přidat základní hru do košíku"
+          aria-label={`Přidat ${p.nazev} do košíku`}
         >
           Do košíku 🛒
         </a>
       </div>
+
+      <!-- Vlastnosti -->
+      <ul class="mt-6 space-y-1.5">
+        {p.vlastnosti.map((v) => (
+          <li class="flex items-start gap-2 text-sm text-gray-400">
+            <span class="text-brand-pink mt-0.5 flex-shrink-0">✓</span>
+            <span>{v}</span>
+          </li>
+        ))}
+      </ul>
     </div>
 
     <!-- Pravý sloupec: packshot -->
     <div class="flex justify-center">
-      <!-- PLACEHOLDER: produktová fotka – dodat ve Fázi 2 -->
-      <div class="w-full max-w-xs md:max-w-sm aspect-square bg-brand-gray-dark rounded-card flex items-center justify-center text-gray-500 text-sm border border-gray-700 text-center px-4">
-        📦 Packshot základní hry<br />(foto dodat)
-      </div>
+      <img
+        src={p.foto}
+        alt={p.nazev}
+        width="480"
+        height="480"
+        loading="eager"
+        decoding="async"
+        class="w-full max-w-xs md:max-w-sm rounded-card object-contain drop-shadow-2xl"
+        onerror={`this.src='${p.fotoFallback}'`}
+      />
     </div>
   </div>
 </section>
