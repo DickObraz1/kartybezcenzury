@@ -1,5 +1,5 @@
 ---
-// UI formuláře — nefunkční zatím, backend přijde ve Fázi 5 (Ecomail serverless)
+// Backend: src/pages/api/subscribe.ts → Ecomail seznam 4
 ---
 
 <section class="bg-brand-black text-brand-white py-16 md:py-24 px-5 reveal">
@@ -13,68 +13,147 @@
       Nech nám email. Posíláme slevy, novinky a občas něco, co tvoje HR oddělení neschválí.
     </p>
 
-    <!-- Formulář — zatím nefunkční, jen UI -->
-    <!-- Fáze 5: napojit na POST /api/subscribe → Ecomail -->
-    <form
-      id="signup-form"
-      class="flex flex-col gap-4"
-      novalidate
-      aria-label="Přihlásit se k odběru novinek"
-    >
-      <!-- Honeypot (skrytý před uživateli, zachytí boty) -->
+    <!-- Formulář -->
+    <form id="signup-form" class="flex flex-col gap-4" novalidate aria-label="Přihlásit se k odběru">
+
+      <!-- Honeypot — scryté před lidmi, zachytí boty -->
       <input
         type="text"
         name="website"
+        id="hp-website"
         tabindex="-1"
         autocomplete="off"
-        class="hidden"
         aria-hidden="true"
+        style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;"
       />
 
+      <!-- Email input + tlačítko -->
       <div class="flex flex-col sm:flex-row gap-3">
-        <label for="email" class="sr-only">Tvůj email</label>
+        <label for="signup-email" class="sr-only">Tvůj email</label>
         <input
-          id="email"
+          id="signup-email"
           type="email"
           name="email"
           placeholder="tvůj@email.cz"
           required
+          autocomplete="email"
           class="flex-1 bg-gray-900 border border-gray-700 text-brand-white placeholder-gray-500 rounded-full px-5 py-3.5 text-base focus:outline-none focus:ring-2 focus:ring-brand-pink focus:border-transparent"
+          aria-describedby="signup-error"
         />
         <button
+          id="signup-btn"
           type="submit"
-          class="bg-brand-pink text-brand-white font-bold px-7 py-3.5 rounded-full hover:bg-pink-600 active:scale-95 transition-all duration-150 focus:outline-none focus:ring-4 focus:ring-brand-pink/50 whitespace-nowrap"
+          class="bg-brand-pink text-brand-white font-bold px-7 py-3.5 rounded-full hover:bg-pink-600 active:scale-95 transition-all duration-150 focus:outline-none focus:ring-4 focus:ring-brand-pink/50 whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Chci slevičku 🎉
         </button>
       </div>
 
-      <!-- GDPR souhlas -->
+      <!-- GDPR checkbox -->
       <label class="flex items-start gap-3 text-left cursor-pointer">
         <input
           type="checkbox"
+          id="signup-gdpr"
           name="gdpr"
           required
-          class="mt-1 flex-shrink-0 accent-brand-pink"
+          class="mt-1 flex-shrink-0 w-4 h-4 accent-brand-pink"
         />
         <span class="text-xs text-gray-400">
           Souhlasím se zpracováním e-mailu pro zasílání novinek a slev.
-          <a href="https://www.dickobraz.cz/info/ochrana-osobnich-udaju" target="_blank" rel="noopener noreferrer" class="underline hover:text-brand-pink">
+          <a
+            href="https://www.dickobraz.cz/podminky-ochrany-osobnich-udaju"
+            target="_blank"
+            rel="noopener"
+            class="underline hover:text-brand-pink"
+          >
             Zásady ochrany osobních údajů.
           </a>
-          16+ obsah.
+          Obsah 16+.
         </span>
       </label>
 
-      <!-- Stavové zprávy — zobrazí se po odeslání (Fáze 5) -->
-      <p id="form-success" class="hidden text-brand-teal text-sm font-bold">
-        ✓ Super, přidali jsme tě! Sleva ti brzy přijde na email.
-      </p>
-      <p id="form-error" class="hidden text-red-400 text-sm">
-        Něco se pokazilo. Zkus to znovu nebo nás kontaktuj na webu.
-      </p>
+      <!-- Chybová hláška -->
+      <p id="signup-error" role="alert" aria-live="polite" class="hidden text-red-400 text-sm text-center"></p>
     </form>
+
+    <!-- Success stav (skrytý, zobrazí se po odeslání) -->
+    <div id="signup-success" class="hidden text-center py-4">
+      <p class="text-3xl mb-2">🎉</p>
+      <p class="font-display text-2xl uppercase text-brand-pink mb-1">Hotovo.</p>
+      <p class="text-gray-300">Vítej mezi úchyly. Sleva ti přijde na email.</p>
+    </div>
 
     <p class="text-xs text-gray-600 mt-4">Kdykoliv se odhlásíš. Žádný spam, jen srandy.</p>
   </div>
 </section>
+
+<script>
+  const form = document.getElementById('signup-form') as HTMLFormElement | null;
+  const btn = document.getElementById('signup-btn') as HTMLButtonElement | null;
+  const emailInput = document.getElementById('signup-email') as HTMLInputElement | null;
+  const gdprInput = document.getElementById('signup-gdpr') as HTMLInputElement | null;
+  const honeypot = document.getElementById('hp-website') as HTMLInputElement | null;
+  const errorEl = document.getElementById('signup-error') as HTMLElement | null;
+  const successEl = document.getElementById('signup-success') as HTMLElement | null;
+
+  if (!form || !btn || !emailInput || !gdprInput || !errorEl || !successEl) {
+    // Fallback: prvky nenalezeny
+  } else {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errorEl.textContent = '';
+      errorEl.classList.add('hidden');
+
+      const email = emailInput.value.trim();
+      const gdpr = gdprInput.checked;
+      const hp = honeypot?.value ?? '';
+
+      // Klientská validace
+      const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRe.test(email)) {
+        showError('Zadej platný email.');
+        emailInput.focus();
+        return;
+      }
+      if (!gdpr) {
+        showError('Potvrď souhlas se zpracováním emailu.');
+        gdprInput.focus();
+        return;
+      }
+
+      // Loading stav
+      btn.disabled = true;
+      btn.textContent = 'Odesílám…';
+
+      try {
+        const res = await fetch('/api/subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, gdpr, honeypot: hp }),
+        });
+
+        const data = await res.json().catch(() => ({ ok: false, error: 'Neznámá chyba.' }));
+
+        if (res.ok && data.ok) {
+          // Success
+          form.classList.add('hidden');
+          successEl.classList.remove('hidden');
+        } else {
+          showError(data.error ?? 'Něco se posralo. Zkus to znovu.');
+          btn.disabled = false;
+          btn.textContent = 'Chci slevičku 🎉';
+        }
+      } catch {
+        showError('Chyba sítě. Zkus to za chvíli.');
+        btn.disabled = false;
+        btn.textContent = 'Chci slevičku 🎉';
+      }
+    });
+
+    function showError(msg: string) {
+      if (!errorEl) return;
+      errorEl.textContent = msg;
+      errorEl.classList.remove('hidden');
+    }
+  }
+</script>
