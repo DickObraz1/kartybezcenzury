@@ -6,23 +6,25 @@ const p = products.zaklad;
 
 <div
   id="sticky-bar"
-  class="fixed bottom-0 left-0 right-0 z-50 bg-brand-black border-t border-gray-800 px-5 py-3 flex items-center justify-between gap-3 translate-y-full transition-transform duration-300 md:hidden"
+  class="fixed bottom-0 left-0 right-0 z-50 bg-brand-black border-t border-gray-800 px-5 py-3 translate-y-full transition-transform duration-300"
   aria-label="Rychlý nákup"
 >
-  <div>
-    <p class="text-xs text-gray-400 leading-none">{p.nazev.split('–')[0].trim()}</p>
-    <p class="text-xl font-display text-brand-white">{p.cena} {p.mena}</p>
-  </div>
+  <div class="max-w-5xl mx-auto flex items-center justify-between gap-3">
+    <div>
+      <p class="text-xs text-gray-400 leading-none">{p.nazev.split('–')[0].trim()}</p>
+      <p class="text-xl font-display text-brand-white">{p.cena} {p.mena}</p>
+    </div>
 
-  <a
-    href={p.addToCartUrl}
-    rel="noopener"
-    data-ga-product="zaklad"
-    class="bg-brand-pink text-brand-white font-bold px-6 py-3 rounded-full text-base hover:bg-pink-600 active:scale-95 transition-all duration-150 whitespace-nowrap focus:outline-none focus:ring-4 focus:ring-brand-pink/50"
-    aria-label={`Přidat ${p.nazev} do košíku`}
-  >
-    Do košíku 🛒
-  </a>
+    <a
+      href={p.addToCartUrl}
+      rel="noopener"
+      data-ga-product="zaklad"
+      class="bg-brand-pink text-brand-white font-bold px-6 py-3 rounded-full text-base hover:bg-pink-600 active:scale-95 transition-all duration-150 whitespace-nowrap focus:outline-none focus:ring-4 focus:ring-brand-pink/50"
+      aria-label={`Přidat ${p.nazev} do košíku`}
+    >
+      Do košíku 🛒
+    </a>
+  </div>
 </div>
 
 <script>
