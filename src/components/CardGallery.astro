@@ -69,21 +69,29 @@ const rozsireniDeck = interleave(cards.rozsireni.otazky, cards.rozsireni.odpoved
             >
               <div
                 class:list={[
-                  'card-inner w-full aspect-[5/7] rounded-2xl p-5 flex flex-col justify-between shadow-xl select-none',
+                  'card-inner w-full aspect-[5/7] rounded-2xl overflow-hidden flex flex-col select-none',
                   card.type === 'question'
-                    ? 'bg-card-yellow text-brand-black'
-                    : 'bg-brand-white text-brand-black border border-gray-200',
+                    ? 'bg-[#ffd103] text-brand-black shadow-xl'
+                    : 'bg-white text-brand-black shadow-[0_6px_28px_rgba(0,0,0,0.45)]',
                 ]}
               >
-                <!-- Horní wordmark -->
-                <div class="text-xs font-bold uppercase tracking-widest opacity-40">
-                  DickObraz
-                </div>
-                <!-- Text karty -->
-                <p class="font-display text-xl uppercase leading-tight">{card.text}</p>
-                <!-- Dolní typ -->
-                <div class="text-xs font-bold uppercase tracking-widest opacity-40 text-right">
-                  {card.type === 'question' ? 'otázka' : 'odpověď'}
+                <!-- Obsah karty -->
+                <div class="flex-1 px-4 pt-3 pb-4 flex flex-col justify-between">
+                  <!-- Text karty — větný zápis, Roboto Bold -->
+                  <p class="font-bold text-base leading-snug">{card.text}</p>
+
+                  <!-- Spodní řádek: wordmark + typ -->
+                  <div class="flex items-end justify-between gap-1 mt-2">
+                    <span class="text-[8px] font-bold uppercase tracking-widest opacity-40 leading-none">
+                      Karty bez cenzury
+                    </span>
+                    <span class:list={[
+                      'text-[8px] font-bold uppercase tracking-widest leading-none',
+                      card.type === 'question' ? 'opacity-50' : 'opacity-30',
+                    ]}>
+                      {card.type === 'question' ? 'Otázka' : 'Odpověď'}
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -104,18 +112,26 @@ const rozsireniDeck = interleave(cards.rozsireni.otazky, cards.rozsireni.odpoved
             >
               <div
                 class:list={[
-                  'card-inner w-full aspect-[5/7] rounded-2xl p-5 flex flex-col justify-between shadow-xl select-none',
+                  'card-inner w-full aspect-[5/7] rounded-2xl overflow-hidden flex flex-col select-none',
                   card.type === 'question'
-                    ? 'bg-card-yellow text-brand-black'
-                    : 'bg-brand-white text-brand-black border border-gray-200',
+                    ? 'bg-[#ffd103] text-brand-black shadow-xl'
+                    : 'bg-white text-brand-black shadow-[0_6px_28px_rgba(0,0,0,0.45)]',
                 ]}
               >
-                <div class="text-xs font-bold uppercase tracking-widest opacity-40">
-                  DickObraz
-                </div>
-                <p class="font-display text-xl uppercase leading-tight">{card.text}</p>
-                <div class="text-xs font-bold uppercase tracking-widest opacity-40 text-right">
-                  {card.type === 'question' ? 'otázka' : 'odpověď'}
+                <div class="flex-1 px-4 pt-3 pb-4 flex flex-col justify-between">
+                  <p class="font-bold text-base leading-snug">{card.text}</p>
+
+                  <div class="flex items-end justify-between gap-1 mt-2">
+                    <span class="text-[8px] font-bold uppercase tracking-widest opacity-40 leading-none">
+                      Karty bez cenzury
+                    </span>
+                    <span class:list={[
+                      'text-[8px] font-bold uppercase tracking-widest leading-none',
+                      card.type === 'question' ? 'opacity-50' : 'opacity-30',
+                    ]}>
+                      {card.type === 'question' ? 'Otázka' : 'Odpověď'}
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -180,13 +196,13 @@ const rozsireniDeck = interleave(cards.rozsireni.otazky, cards.rozsireni.odpoved
 
   /* Tilt mikrointerakce — centrovaná karta se lehce zvětší */
   .embla__slide .card-inner {
-    transition: transform 0.2s ease, opacity 0.2s ease;
+    transition: transform 0.2s ease, filter 0.2s ease;
     transform: scale(0.92);
-    opacity: 0.7;
+    filter: brightness(0.88);
   }
   .embla__slide.is-selected .card-inner {
     transform: scale(1);
-    opacity: 1;
+    filter: brightness(1);
   }
 
   /* Vypni animace při prefers-reduced-motion */
@@ -194,7 +210,7 @@ const rozsireniDeck = interleave(cards.rozsireni.otazky, cards.rozsireni.odpoved
     .embla__slide .card-inner {
       transition: none;
       transform: scale(1) !important;
-      opacity: 1 !important;
+      filter: brightness(1) !important;
     }
   }
 </style>
