@@ -1,0 +1,324 @@
+---
+import Layout from '../layouts/Layout.astro';
+import products from '../data/products.json';
+import cards from '../data/cards.json';
+
+const p = products.zaklad;
+const pageUrl = 'https://kartybezcenzury.cz/karty-proti-lidskosti';
+
+const faqItems = [
+  {
+    q: 'Existuje Cards Against Humanity v češtině?',
+    a: 'Oficálně ne. Vydavatelé Cards Against Humanity českou verzi nevydali a ani neplánují. Existují neoficiální fanouškovské překlady, ale žádná legální, pořádně vyrobená česká verze. Nejbližší alternativa jsou Karty bez cenzury — originálně česká hra inspirovaná stejným konceptem.',
+  },
+  {
+    q: 'Je Karty bez cenzury to samé jako Cards Against Humanity?',
+    a: 'Ne úplně. Karty bez cenzury jsou inspirované stejným formátem (černé otázkové karty + bílé odpovědi = katastrofální kombinace), ale obsah je 100% originálně český. Babiš, Zeman, pivo a lokální trapasy místo amerických referencí, které polovina stolu stejně nezná.',
+  },
+  {
+    q: 'Kde koupit karty proti lidskosti?',
+    a: 'Nejlepší českou alternativu — Karty bez cenzury — koupíš přímo na dickobraz.cz nebo klikneš na tlačítko "Do košíku" na této stránce. Doručení 2–4 pracovní dny po celé ČR.',
+  },
+  {
+    q: 'Kolik stojí karty proti lidskosti?',
+    a: 'Karty bez cenzury stojí 699 Kč za základní hru se 400 kartami. Cards Against Humanity vyjde na ~25 USD + mezinárodní poštovné a případné clo — reálně 700–1 000 Kč za anglickou verzi bez českého humoru.',
+  },
+  {
+    q: 'Kolik karet je v Kartách bez cenzury?',
+    a: '400 karet celkem: 80 černých otázkových + 320 bílých odpovědních. Rozšíření Mezi nohama přidá dalších 100 karet (20 otázek + 80 odpovědí).',
+  },
+  {
+    q: 'Pro kolik hráčů hra funguje?',
+    a: 'Nejlépe 3–10 hráčů. Optimum je tak 5–8 lidí — dost na nepředvídatelné kombinace, ne tolik, aby se z toho stal chaos (i když chaos je taky fajn).',
+  },
+];
+
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqItems.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: item.a,
+    },
+  })),
+};
+
+// Vybrané ukázkové karty — záměrně lokální reference
+const ukazkovyOtazky = [
+  cards.zaklad.otazky[2],  // Co opravdu vyhubilo dinosaury?
+  cards.zaklad.otazky[4],  // Píše se rok 2125. Prezidentem je ___.
+  cards.zaklad.otazky[10], // Tajná ingredience, která dělá české pivo nejlepším...
+];
+const ukazkovyOdpovedi = [
+  cards.zaklad.odpovedi[2],  // Andrej Babiš.
+  cards.zaklad.odpovedi[7],  // Kouřit jointa s Milošem Zemanem.
+  cards.zaklad.odpovedi[11], // Petr Pavel.
+];
+---
+
+<Layout
+  title="Karty proti lidskosti / Cards Against Humanity v češtině – kde koupit"
+  description="Hledáš Cards Against Humanity v češtině? Oficiální česká verze neexistuje – Karty bez cenzury jsou nejbližší (a sprostější) alternativa. Srovnání, cena, kde koupit."
+  canonicalUrl={pageUrl}
+>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(faqJsonLd)} />
+
+  <!-- ══════════════════════════════════════════════
+       HERO
+  ══════════════════════════════════════════════ -->
+  <section class="bg-brand-black text-brand-white px-5 py-16 md:py-24">
+    <div class="max-w-3xl mx-auto">
+      <div class="inline-flex items-center gap-2 bg-brand-wine text-brand-white text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-6">
+        <span>🃏</span>
+        <span>Česká alternativa Cards Against Humanity</span>
+      </div>
+
+      <h1 class="font-display text-5xl md:text-7xl uppercase leading-none mb-6">
+        Karty proti<br />
+        <span class="text-brand-pink">lidskosti</span><br />
+        v češtině
+      </h1>
+
+      <p class="text-gray-300 text-lg md:text-xl mb-4 max-w-2xl">
+        Hledáš <strong class="text-brand-white">Cards Against Humanity v češtině</strong>? Špatná zpráva: oficiální česká verze neexistuje. Dobrá zpráva: máme něco ještě lepšího.
+      </p>
+      <p class="text-gray-400 text-lg mb-10 max-w-2xl">
+        <strong class="text-brand-pink">Karty bez cenzury</strong> jsou česká párty hra inspirovaná stejným konceptem — jenže s českými politiky, českým humorem a bez nutnosti chápat americké reference.
+      </p>
+
+      <div class="flex flex-col sm:flex-row items-start gap-4">
+        <a
+          href={p.addToCartUrl}
+          rel="noopener"
+          data-ga-product="zaklad"
+          class="inline-block bg-brand-pink text-brand-white font-bold text-lg px-8 py-4 rounded-full hover:bg-pink-600 active:scale-95 transition-all duration-150 shadow-lg shadow-pink-500/30 focus:outline-none focus:ring-4 focus:ring-brand-pink/50"
+        >
+          Do košíku — {p.cena} {p.mena} 🛒
+        </a>
+        <a
+          href="/"
+          class="inline-flex items-center gap-2 text-gray-400 hover:text-brand-pink transition-colors py-4 text-sm"
+        >
+          ← Zpět na hlavní stránku
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       CO JSOU CARDS AGAINST HUMANITY
+  ══════════════════════════════════════════════ -->
+  <section class="bg-brand-gray px-5 py-16">
+    <div class="max-w-3xl mx-auto">
+      <h2 class="font-display text-4xl md:text-5xl uppercase text-brand-black mb-6">
+        Co jsou Cards Against Humanity?
+      </h2>
+      <div class="prose prose-lg text-brand-gray-dark max-w-none space-y-4">
+        <p>
+          <strong>Cards Against Humanity</strong> (doslova „Karty proti lidskosti") je americká párty karetní hra pro dospělé, která vznikla v roce 2011. Funguje jednoduchým způsobem: jeden hráč otočí černou otázkovou kartu, ostatní hodí ze svých bílých odpovědních karet tu nejabsurdnější (nebo nejsprostší) odpověď. Kdo rozesměje nebo šokuje nejvíc, bere bod.
+        </p>
+        <p>
+          Hra se stala celosvětovým hitem — prodalo se přes 10 milionů sad. V USA, UK a dalších anglicky mluvících zemích je to základ každé párty. V Česku ale máš smůlu: <strong>oficální česká verze Cards Against Humanity neexistuje</strong> a vydavatelé ji neplánují.
+        </p>
+        <p>
+          Neoficální fanouškovské překlady existují, ale jsou buď nekompletní, nebo vytištěné na papíře z tiskárny. Pokud chceš pořádně vyrobenou hru v češtině, musíš sáhnout jinam.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       KARTY BEZ CENZURY — ČESKÁ ODPOVĚĎ
+  ══════════════════════════════════════════════ -->
+  <section class="bg-brand-black text-brand-white px-5 py-16">
+    <div class="max-w-3xl mx-auto">
+      <h2 class="font-display text-4xl md:text-5xl uppercase mb-6">
+        Karty bez cenzury —<br />
+        <span class="text-brand-pink">česká odpověď</span>
+      </h2>
+      <div class="space-y-4 text-gray-300 text-lg max-w-2xl">
+        <p>
+          Karty bez cenzury jsou <strong class="text-brand-white">originálně česká hra</strong> inspirovaná stejným herním konceptem. Nejde o překlad ani o kopii — obsah je napsaný od základu pro české hráče.
+        </p>
+        <p>
+          Místo amerických celebrit a referencí, které polovina stolu nezná, dostaneš <strong class="text-brand-pink">Babiše, Zemana, Petra Pavla, pražské kavárny a věci, o kterých se v ČR opravdu mluví</strong>. (Nebo nemluví, ale mělo by se.)
+        </p>
+        <p>
+          Výsledek? Stejná zábava jako u Cards Against Humanity — akorát chápeš každý vtip.
+        </p>
+      </div>
+
+      <!-- Klíčové body -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-10">
+        {[
+          { cislo: '400', popis: 'karet v základní sadě' },
+          { cislo: '3–10', popis: 'hráčů, ideálně 5–8' },
+          { cislo: '16+', popis: 'věkové omezení' },
+        ].map((stat) => (
+          <div class="bg-gray-900 rounded-card p-5 text-center border border-gray-800">
+            <p class="font-display text-4xl text-brand-pink">{stat.cislo}</p>
+            <p class="text-gray-400 text-sm mt-1">{stat.popis}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       SROVNÁNÍ
+  ══════════════════════════════════════════════ -->
+  <section class="bg-brand-wine px-5 py-16">
+    <div class="max-w-3xl mx-auto">
+      <h2 class="font-display text-4xl md:text-5xl uppercase text-brand-white mb-2">
+        Srovnání
+      </h2>
+      <p class="text-red-200 mb-8">Karty bez cenzury vs Cards Against Humanity</p>
+
+      <div class="overflow-x-auto rounded-card border border-red-900">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="bg-brand-black/60">
+              <th class="text-left px-4 py-3 text-gray-400 font-semibold w-1/3"></th>
+              <th class="px-4 py-3 text-brand-pink font-bold text-center">Karty bez cenzury</th>
+              <th class="px-4 py-3 text-gray-400 font-semibold text-center">Cards Against Humanity</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              ['Jazyk', 'Čeština ✓', 'Angličtina'],
+              ['Dostupnost v ČR', 'Ihned, poštou', 'Import, clo, týdny čekání'],
+              ['Počet karet', '400 karet', '500+ (ang. základní sada)'],
+              ['Lokální reference', 'Čeští politici, kultura ✓', 'Americké reference ✗'],
+              ['Česká verze', 'Ano, originál ✓', 'Neexistuje ✗'],
+              ['Cena', '699 Kč', '~800–1 000 Kč vč. dopravy'],
+              ['Kvalita karet', 'Poctivý kartón ✓', 'Záleží na edici'],
+            ].map(([vlastnost, kbc, cah], i) => (
+              <tr class={i % 2 === 0 ? 'bg-brand-black/30' : 'bg-brand-black/10'}>
+                <td class="px-4 py-3 text-gray-300 font-medium">{vlastnost}</td>
+                <td class="px-4 py-3 text-brand-white text-center font-semibold">{kbc}</td>
+                <td class="px-4 py-3 text-gray-400 text-center">{cah}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <p class="text-red-200 text-xs mt-4">
+        * Karty bez cenzury nejsou officálním produktem ani licencovanou verzí Cards Against Humanity. Jsou to originálně česky tvořené karty inspirované stejným herním formátem.
+      </p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       UKÁZKA KARET — ČESKÁ VERZE V PRAXI
+  ══════════════════════════════════════════════ -->
+  <section class="bg-brand-black text-brand-white px-5 py-16">
+    <div class="max-w-3xl mx-auto">
+      <h2 class="font-display text-4xl md:text-5xl uppercase mb-2">
+        Takhle to vypadá
+      </h2>
+      <p class="text-gray-400 mb-10">Pár karet, ať vidíš, o čem mluvíme. Žluté = otázky. Bílé = odpovědi.</p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-6">
+        {ukazkovyOtazky.map((text) => (
+          <div class="bg-card-yellow rounded-card p-5 flex flex-col justify-between min-h-40">
+            <p class="text-xs font-bold tracking-widest text-yellow-800 uppercase">DickObraz</p>
+            <p class="font-display text-lg uppercase leading-tight text-brand-black mt-4">{text}</p>
+            <p class="text-xs font-bold tracking-widest text-yellow-800 uppercase mt-4">Otázka</p>
+          </div>
+        ))}
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        {ukazkovyOdpovedi.map((text) => (
+          <div class="bg-gray-100 rounded-card p-5 flex flex-col justify-between min-h-32">
+            <p class="text-xs font-bold tracking-widest text-gray-400 uppercase">DickObraz</p>
+            <p class="font-display text-lg uppercase leading-tight text-brand-black mt-4">{text}</p>
+            <p class="text-xs font-bold tracking-widest text-gray-400 uppercase mt-4">Odpověď</p>
+          </div>
+        ))}
+      </div>
+
+      <p class="text-gray-600 text-sm text-center mt-6">
+        Tohle je jen ochutnávka — celá hra má <strong class="text-gray-400">400 karet</strong>.
+      </p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       FAQ
+  ══════════════════════════════════════════════ -->
+  <section class="bg-brand-gray px-5 py-16">
+    <div class="max-w-3xl mx-auto">
+      <h2 class="font-display text-4xl md:text-5xl uppercase text-brand-black text-center mb-10">
+        Časté dotazy
+      </h2>
+
+      <div class="space-y-4">
+        {faqItems.map((faq) => (
+          <details class="group bg-brand-white rounded-card border border-gray-200 overflow-hidden">
+            <summary class="flex items-center justify-between gap-4 px-5 py-4 cursor-pointer list-none font-bold text-brand-black hover:text-brand-wine transition-colors">
+              <span>{faq.q}</span>
+              <span class="flex-shrink-0 text-brand-pink group-open:rotate-45 transition-transform duration-200 text-2xl font-display leading-none">+</span>
+            </summary>
+            <div class="px-5 pb-5 text-brand-gray-dark text-sm leading-relaxed">
+              {faq.a}
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       CTA
+  ══════════════════════════════════════════════ -->
+  <section class="bg-brand-pink px-5 py-16 text-center">
+    <div class="max-w-xl mx-auto">
+      <p class="font-display text-5xl md:text-6xl uppercase leading-none text-brand-white mb-4">
+        Přestaň hledat.<br />Tady to je.
+      </p>
+      <p class="text-pink-100 text-lg mb-8">
+        Cards Against Humanity v češtině neexistuje — ale Karty bez cenzury existují. 400 karet, 699 Kč, doručení do 4 dnů.
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a
+          href={p.addToCartUrl}
+          rel="noopener"
+          data-ga-product="zaklad"
+          class="inline-block bg-brand-black text-brand-white font-bold text-lg px-8 py-4 rounded-full hover:bg-gray-900 active:scale-95 transition-all duration-150 shadow-lg focus:outline-none focus:ring-4 focus:ring-brand-black/50"
+        >
+          Koupit Karty bez cenzury 🛒
+        </a>
+        <a
+          href="/"
+          class="inline-block border-2 border-white text-white font-bold text-lg px-8 py-4 rounded-full hover:bg-white/10 active:scale-95 transition-all duration-150 focus:outline-none focus:ring-4 focus:ring-white/30"
+        >
+          Více info na hlavní stránce
+        </a>
+      </div>
+
+      <p class="text-pink-200 text-sm mt-6">
+        {p.hodnoceni}/5 ★ · {p.pocetRecenzi} recenzí · Skladem ihned
+      </p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       MINI PATIČKA
+  ══════════════════════════════════════════════ -->
+  <footer class="bg-brand-black text-gray-600 text-xs text-center px-5 py-6">
+    <p>
+      © {new Date().getFullYear()} DickObraz ·
+      <a href="/" class="hover:text-brand-pink transition-colors">kartybezcenzury.cz</a> ·
+      <a href="https://www.dickobraz.cz" target="_blank" rel="noopener" class="hover:text-brand-pink transition-colors">dickobraz.cz</a>
+    </p>
+    <p class="mt-2 text-gray-700">
+      Karty bez cenzury nejsou oficálním produktem ani licencí Cards Against Humanity.
+    </p>
+  </footer>
+</Layout>

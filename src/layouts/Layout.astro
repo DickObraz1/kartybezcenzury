@@ -4,11 +4,13 @@ import '../styles/global.css';
 interface Props {
   title?: string;
   description?: string;
+  canonicalUrl?: string;
 }
 
 const {
   title = 'Karty bez cenzury — hra, kterou si nezahraješ s babičkou',
   description = 'Česká party karetní hra pro dospělé, co nemá zábrany. 80 otázek, 320 odpovědí, 400 karet. Kup teď na dickobraz.cz.',
+  canonicalUrl = 'https://kartybezcenzury.cz',
 } = Astro.props;
 
 const siteUrl = 'https://kartybezcenzury.cz';
@@ -50,7 +52,7 @@ const jsonLd = {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
-    <link rel="canonical" href={siteUrl} />
+    <link rel="canonical" href={canonicalUrl} />
 
     <title>{title}</title>
 
@@ -81,6 +83,9 @@ const jsonLd = {
 
     <!-- JSON-LD Product structured data -->
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+    <!-- Slot pro extra <head> obsah (JSON-LD apod.) na podstránkách -->
+    <slot name="head" />
 
     <!-- GA4 — načte se jen po souhlasu s cookies -->
     <script is:inline define:vars={{ ga4Id }}>
