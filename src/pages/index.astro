@@ -1,29 +1,315 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Hero from '../components/Hero.astro';
-import CardGallery from '../components/CardGallery.astro';
-import HowToPlay from '../components/HowToPlay.astro';
-import Extension from '../components/Extension.astro';
-import Bundle from '../components/Bundle.astro';
-import SocialProof from '../components/SocialProof.astro';
-import EmailSignup from '../components/EmailSignup.astro';
-import FAQ from '../components/FAQ.astro';
-import Footer from '../components/Footer.astro';
-import CookieConsent from '../components/CookieConsent.astro';
----
+import '../styles/novy.css';
+import Cena from '../components/novy/Cena.astro';
+import Koupit from '../components/novy/Koupit.astro';
+import Odpocet from '../components/novy/Odpocet.astro';
+import Kod from '../components/novy/Kod.astro';
+import VelkyKod from '../components/novy/VelkyKod.astro';
+import { AKCE, ESHOP, PRODUKTY, KOMPLET_BEZNE, HRA, CENZUROVANE, TEXTY, cenaSKodem, dopln, kc, odkazProdukt } from '../content/texty';
 
-<Layout
-  title="Karty bez cenzury – Karty proti lidskosti v češtině"
-  description="Karty proti lidskosti konečně v češtině. Karty bez cenzury jsou sprostá párty hra se 400 kartami černého humoru – česká verze Cards Against Humanity, akorát drzejší."
->
-  <Hero />
-  <CardGallery />
-  <HowToPlay />
-  <Extension />
-  <Bundle />
-  <SocialProof />
-  <EmailSignup />
-  <FAQ />
-  <Footer />
-  <CookieConsent />
-</Layout>
+const T = TEXTY;
+const P = PRODUKTY;
+const start = Date.parse(AKCE.start);
+const konec = Date.parse(AKCE.konec);
+const zapnuto = AKCE.zapnuto;
+const web = 'https://kartybezcenzury.cz';
+const og = `${web}/images/products/zaklad.jpg`;
+const kodSpan = '<span data-kod></span>';
+const soucet = cenaSKodem(P.kbc) + cenaSKodem(P.mn);
+const rok = new Date().getFullYear();
+const hraci = T.hraci;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: 'Karty bez cenzury – základní hra',
+  description: 'Česká party karetní hra pro dospělé. 80 otázek, 320 odpovědí, 400 karet celkem.',
+  image: og,
+  url: web,
+  brand: { '@type': 'Brand', name: 'DickObraz' },
+  offers: { '@type': 'Offer', priceCurrency: 'CZK', price: String(P.kbc.cena), availability: 'https://schema.org/InStock', url: odkazProdukt(P.kbc) },
+  aggregateRating: { '@type': 'AggregateRating', ratingValue: '5', reviewCount: '16', bestRating: '5', worstRating: '1' },
+};
+---
+<!doctype html>
+<html lang="cs" data-stav="bez">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="generator" content={Astro.generator}>
+  <title>{T.meta.titulek}</title>
+  <meta name="description" content={T.meta.popis}>
+  <meta name="theme-color" content="#1A1A1A">
+  <link rel="canonical" href={web}>
+  <meta property="og:type" content="product">
+  <meta property="og:url" content={web}>
+  <meta property="og:title" content={T.meta.titulek}>
+  <meta property="og:description" content={T.meta.popis}>
+  <meta property="og:image" content={og}>
+  <meta property="og:locale" content="cs_CZ">
+  <meta property="og:site_name" content="DickObraz">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="preload" href="/fonts/anton.woff2" as="font" type="font/woff2" crossorigin>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <script is:inline define:vars={{ start, konec, zapnuto }}>
+    // Jestli běží Black Friday, se rozhodne dřív, než se cokoli vykreslí.
+    (function () {
+      var q = new URLSearchParams(location.search), d = document.documentElement;
+      var c = q.get('cas'), n = c ? Date.parse(c) : Date.now();
+      if (isNaN(n)) n = Date.now();
+      d.dataset.stav = zapnuto && n >= start && n <= konec ? 'bezi' : 'bez';
+      try { if (!localStorage.getItem('kbc_souhlas') && !localStorage.getItem('cookieConsent')) d.dataset.ck = '1'; } catch (e) { d.dataset.ck = '1'; }
+    })();
+  </script>
+</head>
+<body>
+
+<!-- ======================= HERO ======================= -->
+<header class="hero" id="hero" data-produkt-karta="kbc">
+  <div class="top"><span>{T.hero.znacka}</span><span class="a18">{T.hero.vek}</span></div>
+  <h1 class="h1 anton">{T.hero.nadpis1}<span class="sm y">{T.hero.nadpis2}<br>{T.hero.nadpis3}</span></h1>
+
+  <div class="stage" data-stage>
+    <div class="glow"></div>
+    <div class="obj hkarta o-karta" aria-hidden="true"><span>{HRA.odpovedi[10]}</span></div>
+    <div class="obj krab mn o-mn" aria-hidden="true"><i class="t"></i><i class="s"></i><i class="f">MEZI<br>NOHAMA</i></div>
+    <div class="obj krab o-kbc" role="img" aria-label={P.kbc.nazev}><i class="t"></i><i class="s"></i><i class="f">KARTY<br>BEZ<br>CENZURY</i></div>
+    <canvas aria-hidden="true"></canvas>
+    <div class="paska p1" aria-hidden="true"><span class="s-bezi">{T.hero.paskyBf[0]}</span><span class="s-bez">{T.hero.pasky[0]}</span></div>
+    <div class="paska p2" aria-hidden="true"><span class="s-bezi">{T.hero.paskyBf[1]}</span><span class="s-bez">{T.hero.pasky[1]}</span></div>
+    <button type="button" class="naklon" data-naklon hidden>{T.hero.naklon}</button>
+  </div>
+
+  <div class="offer">
+    <div class="hp-nazev anton">{T.hero.nazev}</div>
+    <Cena p={P.kbc} />
+    <div class="radek s-bezi">
+      <Kod misto="hero" napoveda />
+      <span class="hvezdy"><b>★★★★★</b>{T.hero.hodnoceni}</span>
+    </div>
+    <Koupit p={P.kbc} misto="hero" />
+    <p class="pravni s-bezi" set:html={dopln(T.pravni, { kod: kodSpan })}></p>
+    <p class="pravni hvezdy-radek s-bez"><b class="y">★★★★★</b> {T.hero.hodnoceni}</p>
+  </div>
+</header>
+
+<main>
+<section class="velky-odpocet s-bezi" aria-label="Odpočet"><Odpocet velky /></section>
+<VelkyKod misto="velky-nahore" />
+
+<!-- ======================= ZAHRAJ SI KOLO ======================= -->
+<section class="sc hra dve" id="hra">
+  <div>
+    <h2 class="anton" data-objev>{T.hra.nadpis1}<br><span class="y">{T.hra.nadpis2}</span></h2>
+    <p class="pod">{T.hra.navod}</p>
+    <p class="hra-stav">{T.hra.odehrano}: <b data-hra-kolo>0</b></p>
+  </div>
+  <div class="stul" data-hra>
+    <div class="otazka"><span data-hra-otazka>{HRA.otazky[0]}</span><small>Karty<br>bez cenzury</small></div>
+    <div class="ruka" data-hra-ruka>
+      {HRA.odpovedi.slice(0, 4).map((o, i) => (
+        <button type="button" class="bila" data-hra-karta style={`--d:${i}`}><span>{o}</span><small>Karty<br>bez cenzury</small></button>
+      ))}
+    </div>
+    <p class="reakce" data-hra-reakce aria-live="polite"></p>
+    <div class="hra-tl">
+      <button type="button" class="cta" data-hra-dalsi hidden>{T.hra.dalsi}</button>
+      <button type="button" class="cta druha" data-hra-zamichat>{T.hra.zamichat}</button>
+    </div>
+    <div class="pop" data-hra-pop>
+      <div class="tag s-bezi">−25 %</div>
+      <p set:html={T.hra.popNadpis}></p>
+      <p class="mensi">{T.hra.popText}</p>
+      <Cena p={P.kbc} />
+      <Koupit p={P.kbc} misto="hra" trida="tmava" />
+    </div>
+  </div>
+</section>
+
+<div class="paska bezi predel" aria-hidden="true"><span>{(T.hero.pasky[1] + ' · ').repeat(8)}</span></div>
+
+<!-- ======================= JAK SE HRAJE ======================= -->
+<section class="sc jak" id="jak">
+  <h2 class="anton" data-objev>{T.jak.nadpis1}<br><span class="y">{T.jak.nadpis2}</span></h2>
+  <ol class="kroky">
+    {T.jak.kroky.map((k, i) => (
+      <li class="krok" data-objev><i class="anton">{i + 1}</i><b>{k.nadpis}</b><span>{k.text}</span></li>
+    ))}
+  </ol>
+  <div class="video" data-video-box>
+    <button type="button" class="video-tl" data-video={T.jak.videoUrl}><i aria-hidden="true">▶</i><span class="anton">{T.jak.video}</span></button>
+  </div>
+  <ul class="fajfky">
+    {T.jak.vlastnosti.map((v) => <li>{v}</li>)}
+  </ul>
+  <a class="odkaz" href={T.jak.pravidlaUrl} target="_blank" rel="noopener">{T.jak.pravidla} →</a>
+</section>
+
+<!-- ======================= KOLIK VÁS BUDE ======================= -->
+<section class="sc hraci dve" id="hraci">
+  <div>
+    <h2 class="anton" data-objev>{hraci.nadpis1}<br><span class="y">{hraci.nadpis2}</span></h2>
+    <p class="pod">{hraci.navod}</p>
+  </div>
+  <div class="hraci-box" data-hraci data-hlasky={JSON.stringify(hraci.hlasky)} data-od={hraci.rozsireniOd}>
+    <div class="hraci-cislo"><b class="anton" data-hraci-cislo>5</b><span>{hraci.jednotka}</span></div>
+    <div class="panaci" aria-hidden="true">{Array.from({ length: 10 }, (_, i) => <i class={i < 5 ? 'on' : ''}></i>)}</div>
+    <input type="range" min="3" max="10" step="1" value="5" aria-label={`${hraci.nadpis1} ${hraci.nadpis2}`} data-hraci-jezdec>
+    <p class="hraci-hlaska anton" data-hraci-hlaska aria-live="polite">{hraci.hlasky[5]}</p>
+    <p class="hraci-rada" data-hraci-rada data-zaklad={hraci.radaZaklad} data-obe={hraci.radaObe}>{hraci.radaZaklad}</p>
+    <Koupit p={P.kbc} misto="hraci" />
+    <div data-hraci-obe hidden>
+      <Koupit p={P.mn} misto="hraci" trida="druha" text={`+ Mezi nohama za ${kc(P.mn.cena)} Kč`} textBf={`+ Mezi nohama za ${kc(cenaSKodem(P.mn))} Kč`} />
+    </div>
+  </div>
+</section>
+
+<!-- ======================= ROZŠÍŘENÍ MEZI NOHAMA ======================= -->
+<section class="sc mezi dve" id="mezi-nohama" data-sekce="mn">
+  <div>
+    <span class="stit">{T.rozsireni.stitek}</span>
+    <h2 class="anton" data-objev>{T.rozsireni.nadpis1}<br><span class="ruz">{T.rozsireni.nadpis2}</span></h2>
+    <p class="citat">„{T.rozsireni.citat}“</p>
+    <div class="cenzy">
+      {CENZUROVANE.map((t, i) => (
+        <button type="button" class="cenz" data-cenz={i} aria-label={T.rozsireni.odhal}><span class="txt">{t}</span><span class="pruh anton">{T.rozsireni.cenzura}</span><small>{T.rozsireni.odhal}</small></button>
+      ))}
+    </div>
+  </div>
+  <div class="blok-cena" data-produkt-karta="mn">
+    <div class="mezi-produkt">
+      <img src={P.mn.obrazek} alt={P.mn.nazev} width="420" height="624" loading="lazy" decoding="async">
+      <div>
+        <p class="pod" style="margin:0">{P.mn.popis}</p>
+        <ul class="fajfky ruzove">{T.rozsireni.body.map((b) => <li>{b}</li>)}</ul>
+      </div>
+    </div>
+    <p class="spoluprace">{T.rozsireni.spoluprace}</p>
+    <p class="pozor">{T.rozsireni.vyzaduje}</p>
+    <Cena p={P.mn} />
+    <Koupit p={P.mn} misto="produkt" />
+    <p class="dohromady s-bezi">{dopln(T.rozsireni.dohromady, { soucet: kc(soucet), bezne: kc(KOMPLET_BEZNE) })}</p>
+  </div>
+</section>
+
+<!-- ======================= BALÍČEK (mimo Black Friday) ======================= -->
+<section class="sc komplet s-bez" id="komplet">
+  <div class="komplet-box" data-produkt-karta="komplet">
+    <img src={P.komplet.obrazek} alt={P.komplet.nazev} width="720" height="720" loading="lazy" decoding="async">
+    <div>
+      <span class="stit zluty">{dopln(T.komplet.stitek, { castka: kc(KOMPLET_BEZNE - P.komplet.cena) })}</span>
+      <h2 class="anton">{T.komplet.nadpis1}<br><span class="ruz">{T.komplet.nadpis2}</span><br>{T.komplet.nadpis3}</h2>
+      <p class="citat">„{T.komplet.citat}“</p>
+      <p class="pod">{T.komplet.text}</p>
+      <div class="pr"><b>{kc(P.komplet.cena)} Kč</b><s>{dopln(T.komplet.misto, { bezne: kc(KOMPLET_BEZNE) })}</s></div>
+      <a class="cta" href={odkazProdukt(P.komplet)} rel="noopener" data-eshop data-koupit data-produkt="komplet" data-misto="komplet">{dopln(T.komplet.tlacitko, { cena: kc(P.komplet.cena) })}</a>
+    </div>
+  </div>
+</section>
+
+<div class="paska bezi predel" aria-hidden="true" style="transform:rotate(2deg)"><span>{(T.hero.pasky[0] + ' · ').repeat(8)}</span></div>
+
+<!-- ======================= PRO KOHO TO JE / NENÍ ======================= -->
+<section class="sc prokoho" id="pro-koho" data-prokoho>
+  <h2 class="anton" data-objev>{T.proKoho.nadpis1}<br>{T.proKoho.nadpis2} <span class="pk-slovo"><span class="y pk-je">{T.proKoho.je}?</span><span class="ruz pk-neni">{T.proKoho.neni}?</span></span></h2>
+  <div class="prepinac" role="tablist">
+    <button type="button" role="tab" aria-selected="true" data-pk="je">{T.proKoho.je}</button>
+    <button type="button" role="tab" aria-selected="false" data-pk="neni">{T.proKoho.neni}</button>
+  </div>
+  <ul class="pk-seznam pk-je">{T.proKoho.seznamJe.map((s) => <li>{s}</li>)}</ul>
+  <ul class="pk-seznam pk-neni">{T.proKoho.seznamNeni.map((s) => <li>{s}</li>)}</ul>
+</section>
+
+<!-- ======================= CO ŘÍKAJÍ OSTATNÍ ======================= -->
+<section class="sc duvera" id="recenze">
+  <h2 class="anton" data-objev>{T.duvera.nadpis1} <span class="y">{T.duvera.nadpis2}</span></h2>
+  <div class="cisla">
+    {T.duvera.cisla.map((c) => <div><b class="anton">{c.cislo}</b><span>{c.popis}</span></div>)}
+  </div>
+  <div class="recenze">
+    {T.duvera.recenze.map((r) => <blockquote data-objev><b class="hv">★★★★★</b>„{r.text}“<cite>{r.autor}</cite></blockquote>)}
+  </div>
+  <a class="heureka" href={T.duvera.heurekaUrl} target="_blank" rel="noopener"><i aria-hidden="true"></i>{T.duvera.heureka} →</a>
+</section>
+
+<!-- ======================= E-MAIL ======================= -->
+<section class="sc email" id="email">
+  <h2 class="anton" data-objev>{T.email.nadpis1}<br><span class="y">{T.email.nadpis2}</span></h2>
+  <p class="pod">{T.email.text}</p>
+  <form id="signup-form" novalidate aria-label="Přihlásit se k odběru" data-odesilam={T.email.odesilam}>
+    <input type="text" name="website" id="hp-website" tabindex="-1" autocomplete="off" aria-hidden="true" class="past">
+    <div class="email-radek">
+      <label for="signup-email" class="sr">E-mail</label>
+      <input id="signup-email" type="email" name="email" placeholder={T.email.pole} required autocomplete="email" aria-describedby="signup-error">
+      <button id="signup-btn" type="submit" class="cta">{T.email.tlacitko}</button>
+    </div>
+    <label class="email-souhlas"><input type="checkbox" id="signup-gdpr" name="gdpr" required><span>{T.email.souhlas} <a href={T.paticka.soukromiUrl} target="_blank" rel="noopener">{T.email.zasady}</a></span></label>
+    <p id="signup-error" class="email-chyba" role="alert" aria-live="polite" hidden></p>
+  </form>
+  <div id="signup-success" class="email-hotovo" hidden><b class="anton">{T.email.hotovoNadpis}</b><span>{T.email.hotovoText}</span></div>
+  <p class="pravni">{T.email.pod}</p>
+</section>
+
+<!-- ======================= OTÁZKY ======================= -->
+<section class="sc faq" id="faq">
+  <h2 class="anton" data-objev>{T.faq.nadpis1} <span class="y">{T.faq.nadpis2}</span></h2>
+  <div class="faq-seznam">
+    {T.faq.otazky.map((f) => <details><summary>{f.q}</summary><p>{f.a}</p></details>)}
+    <details><summary>{T.faq.cahOtazka}</summary><p set:html={T.faq.cahOdpoved}></p></details>
+  </div>
+</section>
+
+<!-- ======================= ZÁVĚR ======================= -->
+<section class="sc zaver-sc" data-produkt-karta="kbc">
+  <div class="zaver">
+    <h2 class="anton s-bez"><span class="y">{T.zaver.nadpis1}</span><br>{T.zaver.nadpis2}</h2>
+    <h2 class="anton s-bezi"><span class="y">{T.zaver.nadpisBf1}</span><br>{T.zaver.nadpisBf2}</h2>
+    <Odpocet velky />
+    <VelkyKod misto="velky-zaver" />
+    <Cena p={P.kbc} />
+    <Koupit p={P.kbc} misto="zaver" />
+    <p class="pravni s-bezi" set:html={dopln(T.pravni, { kod: kodSpan })}></p>
+  </div>
+</section>
+</main>
+
+<!-- ======================= SPODNÍ LIŠTA ======================= -->
+<div class="lista" data-lista>
+  <button type="button" class="kod s-bezi" data-kopiruj data-misto="sticky" aria-label="Zkopírovat slevový kód"><span data-kod></span><small>vlož v košíku</small></button>
+  <div class="t s-bezi"><span>{T.odpocet.konciZa}</span><b data-odpocet-kratky>--</b></div>
+  <div class="t s-bez"><span data-lista-nazev>{P.kbc.nazev}</span><b data-lista-cena>{kc(P.kbc.cena)} Kč</b></div>
+  <a class="cta" href={odkazProdukt(P.kbc)} rel="noopener" data-eshop data-koupit data-produkt="kbc" data-lista-tlacitko data-misto="sticky"><span>{T.lista.koupit}</span><small data-lista-produkt></small></a>
+</div>
+<div class="hlaska" data-hlaska role="status" aria-live="polite"></div>
+
+<!-- ======================= COOKIES ======================= -->
+<div class="cookies" data-cookies role="dialog" aria-label="Cookies">
+  <p>{T.cookies.text}</p>
+  <div class="tl">
+    <button type="button" data-c="ano">{T.cookies.ano}</button>
+    <button type="button" class="slabe" data-c="ne">{T.cookies.ne}</button>
+  </div>
+</div>
+
+<footer>
+  <a class="logo" href={ESHOP} target="_blank" rel="noopener" aria-label="DickObraz e-shop"><img src="/images/dickobraz-logo.png" alt="DickObraz" width="140" height="48" loading="lazy" decoding="async"></a>
+  <span>{T.paticka.motto}</span>
+  <nav>
+    <a href={ESHOP} target="_blank" rel="noopener">{T.paticka.eshop} →</a>
+    <a href={T.paticka.podminkyUrl} target="_blank" rel="noopener">{T.paticka.podminky}</a>
+    <a href={T.paticka.soukromiUrl} target="_blank" rel="noopener">{T.paticka.soukromi}</a>
+    <a href="#" data-cookies-otevrit>{T.paticka.cookies}</a>
+    <a href={T.paticka.instagram} target="_blank" rel="noopener">Instagram</a>
+    <a href={T.paticka.facebook} target="_blank" rel="noopener">Facebook</a>
+    <a href="/karty-proti-lidskosti">Karty proti lidskosti česky</a>
+  </nav>
+  <span>{T.paticka.dospeli}</span>
+  <span>© {rok} {T.paticka.prava}</span>
+</footer>
+
+<script>
+  import '../scripts/app.ts';
+</script>
+</body>
+</html>

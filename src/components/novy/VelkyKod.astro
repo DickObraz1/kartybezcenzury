@@ -1,0 +1,14 @@
+---
+import { TEXTY } from '../../content/texty';
+interface Props { misto: string }
+const { misto } = Astro.props;
+const k = TEXTY.velkyKod;
+---
+<section class="velky-kod s-bezi" aria-label="Slevový kód">
+  <p class="vk-nad">{k.nad}</p>
+  <button type="button" class="vk-tl" data-kopiruj data-misto={misto} aria-label="Zkopírovat slevový kód">
+    <span class="vk-kod anton" data-kod></span>
+    <span class="vk-akce anton" data-kopiruj-text data-hotovo={k.hotovo}>{k.tlacitko}</span>
+  </button>
+  <p class="vk-pod">{k.pod}</p>
+</section>

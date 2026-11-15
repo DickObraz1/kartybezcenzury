@@ -1,0 +1,17 @@
+---
+import { TEXTY } from '../../content/texty';
+interface Props { velky?: boolean }
+const { velky = false } = Astro.props;
+const o = TEXTY.odpocet;
+---
+<div class={velky ? 'cd-wrap cd-velky s-bezi' : 'cd-wrap s-bezi'}>
+  <div class="cd-popis">
+    <span>{velky ? o.velkyKonci : o.konciZa}</span>
+  </div>
+  <div class="cd" data-odpocet role="timer">
+    <div><b data-c1>--</b><span>{o.dni}</span></div>
+    <div><b data-c2>--</b><span>{o.hod}</span></div>
+    <div><b data-c3>--</b><span>{o.min}</span></div>
+    <div class="sek"><b data-c4>--</b><span>{o.sek}</span></div>
+  </div>
+</div>

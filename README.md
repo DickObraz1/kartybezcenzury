@@ -1,4 +1,35 @@
-# kartybezcenzury.cz — Landing page
+# kartybezcenzury.cz
+
+Hlavní stránka pro Karty bez cenzury. Stejný vzhled jako Black Friday stránka DickObrazu.
+
+## Kde co změnit (bez programování)
+
+Všechno je v jednom souboru: `src/content/texty.ts`
+
+- **Texty, ceny, karty v mini hře, recenze, otázky a odpovědi:** přepiš, co je mezi uvozovkami.
+- **Black Friday:** nahoře v části `AKCE`. Stránka ukazuje slevu a kód jen mezi daty `start` a `konec`.
+  Po datu `konec` se sama vrátí do běžné podoby (běžné ceny, žádný kód, zpátky balíček KOMPLET).
+  Vypnout dřív: přepiš `zapnuto: true` na `zapnuto: false`.
+- **Balíček KOMPLET** se během Black Friday neukazuje, protože se na něj sleva nevztahuje.
+
+Po změně stačí změnu uložit do GitHubu (větev `main`), Vercel stránku nasadí sám.
+
+## Vyzkoušení
+
+- `?cas=2026-12-05T10:00` na konci adresy ukáže stránku tak, jak bude vypadat v jiný den (třeba po akci).
+- `?debug=1` vypisuje do konzole prohlížeče, co se posílá do měření.
+- `?3d=0` vypne 3D krabičky nahoře.
+
+## Co se měří (Google Analytics)
+
+`view_item`, `select_item`, `kbc_cta_click` (klik na Koupit), `kbc_code_copy`, `kbc_kolo` (odehrané kolo mini hry),
+`kbc_odcenzurovano`, `kbc_hraci`, `kbc_video`, `newsletter_signup`, `kbc_scroll`.
+Nákup a přidání do košíku měří e-shop.
+
+---
+
+## Původní technické poznámky
+
 
 Konverzní landing page pro karetní hru Karty bez cenzury (DickObraz).
 Stack: Astro + Tailwind CSS v4, nasazení na Vercel.

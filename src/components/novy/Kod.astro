@@ -1,0 +1,8 @@
+---
+import { TEXTY } from '../../content/texty';
+interface Props { misto: string; napoveda?: boolean }
+const { misto, napoveda = false } = Astro.props;
+---
+<button type="button" class="kod s-bezi" data-kopiruj data-misto={misto} aria-label="Zkopírovat slevový kód">
+  <span data-kod></span>{napoveda && <small>{TEXTY.kod.napoveda}</small>}
+</button>

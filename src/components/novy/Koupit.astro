@@ -1,0 +1,8 @@
+---
+import { TEXTY, odkazProdukt, cenaSKodem, dopln, kc, type Produkt } from '../../content/texty';
+interface Props { p: Produkt; misto: string; trida?: string; text?: string; textBf?: string }
+const { p, misto, trida = '', text, textBf } = Astro.props;
+const bezny = text ?? dopln(TEXTY.cena.koupit, { cena: kc(p.cena) });
+const bf = textBf ?? dopln(TEXTY.cena.koupitBf, { cena: kc(cenaSKodem(p)) });
+---
+<a class={`cta ${trida}`} href={odkazProdukt(p)} rel="noopener" data-eshop data-koupit data-produkt={p.id} data-misto={misto}><span class="s-bezi">{bf}</span><span class="s-bez">{bezny}</span></a>

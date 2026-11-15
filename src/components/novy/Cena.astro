@@ -1,0 +1,12 @@
+---
+import { TEXTY, cenaSKodem, uspora, dopln, kc, type Produkt } from '../../content/texty';
+interface Props { p: Produkt }
+const { p } = Astro.props;
+---
+<div class="pr s-bezi">
+  <s>{kc(p.cena)} Kč</s><b>{kc(cenaSKodem(p))} Kč</b>
+  <span class="us">{dopln(TEXTY.cena.usetris, { castka: kc(uspora(p)) })}</span>
+</div>
+<div class="pr s-bez">
+  <b>{kc(p.cena)} Kč</b>
+</div>
